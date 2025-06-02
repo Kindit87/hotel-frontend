@@ -1,0 +1,77 @@
+<div class="room-booking-container">
+  <div class="room-image">
+    <img [src]="room?.imagePath" [alt]="room?.name">
+  </div>
+
+  <div class="room-details">
+    <h2 class="room-name">{{ room?.name }}</h2>
+
+    <div class="room-capacity">
+      <span>{{ room?.capacity }} {{ room?.capacity === 1 ? 'человек' : 'человека' }}</span>
+    </div>
+
+    <div class="date-selection">
+      <div class="date-field">
+        <label for="check-in">Дата заезда</label>
+        <input type="date"
+               id="check-in"
+               [min]="getTodayDate()"
+               [(ngModel)]="checkInDate"
+               (change)="onDateChange()"
+               class="date-input">
+      </div>
+
+      <div class="date-field">
+        <label for="check-out">Дата выезда</label>
+        <input type="date"
+               id="check-out"
+               [min]="getDateAfter(checkInDate, 1)"
+               [(ngModel)]="checkOutDate"
+               (change)="onDateChange()"
+               class="date-input">
+      </div>
+    </div>
+
+    <div *ngIf="dateError" class="date-error">
+      {{ dateError }}
+    </div>
+
+    <p class="room-description">{{ room?.description }}</p>
+
+    <div class="room-price">
+      <span class="price-label">Цена за ночь:</span>
+      <span class="price-value">{{ room?.price }} ₽</span>
+    </div>
+
+    <div class="additional-services">
+      <h3>Дополнительные услуги</h3>
+      <ul class="services-list">
+        <li *ngFor="let service of room?.roomServices"
+            class="service-item"
+            [class.selected]="isServiceSelected(service.id!)"
+            (click)="toggleService(service.id!)">
+          <div class="service-header">
+            <span class="service-name">{{ service.name }}</span>
+            <span class="service-price">{{ service.price }} ₽</span>
+          </div>
+          <p class="service-description">{{ service.description }}</p>
+          <div class="service-checkbox">
+            <div class="checkbox" [class.checked]="isServiceSelected(service.id!)"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nights-calculation">
+      <span>Количество ночей: {{ getNights() }}</span>
+      <span>{{ getFormattedPriceLine() }} ₽</span>
+    </div>
+
+    <div class="total-price">
+      <span class="total-label">Итого:</span>
+      <span class="total-value">{{ getTotalPrice() }} ₽</span>
+    </div>
+
+    <button class="book-button" (click)="bookRoom()">Забронировать</button>
+  </div>
+</div>

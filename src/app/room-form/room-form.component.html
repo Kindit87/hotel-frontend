@@ -1,0 +1,87 @@
+<div class="room-form-container">
+  <h2>{{ isEditMode ? 'Редактирование номера' : 'Создание нового номера' }}</h2>
+
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="room-form">
+    <div class="form-group">
+      <label for="roomNumber">Номер комнаты</label>
+      <input type="text" id="roomNumber" formControlName="number" class="form-control">
+      <div class="error-message" *ngIf="roomForm.get('number')?.invalid && roomForm.get('number')?.touched">
+        Номер комнаты обязателен
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Название</label>
+      <input type="text" id="name" formControlName="name" class="form-control">
+      <div class="error-message" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+        Название обязательно
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Описание</label>
+      <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
+      <div class="error-message" *ngIf="roomForm.get('description')?.invalid && roomForm.get('description')?.touched">
+        Описание обязательно
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="price">Цена за ночь</label>
+        <input type="number" id="price" formControlName="price" class="form-control">
+        <div class="error-message" *ngIf="roomForm.get('price')?.invalid && roomForm.get('price')?.touched">
+          Укажите корректную цену
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="capacity">Вместимость</label>
+        <input type="number" id="capacity" formControlName="capacity" class="form-control">
+        <div class="error-message" *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched">
+          Укажите корректную вместимость
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Изображение</label>
+      <div class="image-upload-container">
+        <div class="image-preview" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Предпросмотр изображения">
+        </div>
+        <div class="image-upload">
+          <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+          <label for="image" class="file-label">Выбрать изображение</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Дополнительные услуги</label>
+      <div class="services-container">
+        <div *ngFor="let service of additionalServices" class="service-item">
+          <label class="service-checkbox">
+            <input type="checkbox"
+                   [checked]="isServiceSelected(service.id!)"
+                   (change)="toggleService(service.id!)">
+            <span class="service-name">{{ service.name }}</span>
+            <span class="service-price">{{ service.price }} ₽</span>
+          </label>
+          <p class="service-description">{{ service.description }}</p>
+        </div>
+
+        <div *ngIf="additionalServices.length === 0" class="no-services">
+          Нет доступных дополнительных услуг. <a routerLink="/services/new">Добавить услугу</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" routerLink="/rooms" class="btn btn-secondary">Отмена</button>
+      <button type="submit" [disabled]="roomForm.invalid" class="btn btn-primary">
+        {{ isEditMode ? 'Сохранить изменения' : 'Создать номер' }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,19 @@
+<div class="room-card">
+  <div class="room-card-image">
+    <img [src]="room.imagePath" [alt]="'Room ' + room.number">
+  </div>
+  <div class="room-card-content">
+    <h3 class="room-card-title">{{ room.name }}</h3>
+    <div class="room-card-details">
+      <div class="room-card-detail">
+        <span class="room-card-label">Вместимость:</span>
+        <span class="room-card-value">{{ room.capacity }} человек</span>
+      </div>
+      <div class="room-card-detail">
+        <span class="room-card-label">Цена за день:</span>
+        <span class="room-card-value room-card-price">{{ room.price }} ₽</span>
+      </div>
+    </div>
+    <a routerLink="/room/book/{{ room.id }}"><button class="room-card-button">Забронировать</button></a>
+  </div>
+</div>

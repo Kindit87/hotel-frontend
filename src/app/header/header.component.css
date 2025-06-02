@@ -1,0 +1,250 @@
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Logo styles */
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.logo svg {
+  margin-right: 10px;
+  color: #5a67d8;
+}
+
+/* Navigation styles */
+.navigation {
+  display: flex;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+  .nav-list li {
+    margin: 0 15px;
+  }
+
+  .nav-list a {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s;
+    padding: 8px 0;
+    position: relative;
+  }
+
+    .nav-list a:hover,
+    .nav-list a.active {
+      color: #5a67d8;
+    }
+
+      .nav-list a.active:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #5a67d8;
+      }
+
+/* User section styles */
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.search-button,
+.notification-button,
+.user-button,
+.mobile-menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  color: #4a5568;
+  transition: color 0.3s;
+}
+
+  .search-button:hover,
+  .notification-button:hover,
+  .user-button:hover {
+    color: #5a67d8;
+  }
+
+.notification-button {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #e53e3e;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-button {
+  padding: 5px 10px;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+
+  .user-button:hover {
+    background-color: #f7fafc;
+  }
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.user-name {
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.user-button svg {
+  transition: transform 0.3s;
+}
+
+  .user-button svg.rotate {
+    transform: rotate(180deg);
+  }
+
+.user-menu-container {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 200px;
+  margin-top: 10px;
+  z-index: 10;
+}
+
+  .user-dropdown ul {
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+  }
+
+  .user-dropdown li {
+    padding: 0;
+  }
+
+  .user-dropdown a {
+    padding: 10px 16px;
+    display: block;
+    color: #4a5568;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+    .user-dropdown a:hover {
+      background-color: #f7fafc;
+      color: #5a67d8;
+    }
+
+.divider {
+  border-top: 1px solid #e2e8f0;
+  margin: 8px 0;
+}
+
+/* Mobile menu button */
+.mobile-menu-button {
+  display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .navigation {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+    display: block;
+  }
+
+    .navigation.active {
+      height: auto;
+    }
+
+  .nav-list {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+    .nav-list li {
+      margin: 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+      .nav-list li:last-child {
+        border-bottom: none;
+      }
+
+  .user-name {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .search-button {
+    margin-right: 5px;
+  }
+}

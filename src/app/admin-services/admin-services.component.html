@@ -1,0 +1,26 @@
+<div class="admin-services-container">
+  <div class="admin-services-header">
+    <h2>Дополнительные услуги</h2>
+    <button routerLink="/admin/room/services/new/" class="btn btn-primary">Добавить услугу</button>
+  </div>
+
+  <div class="admin-services">
+    <div *ngIf="services.length === 0" class="no-services">
+      <p>Нет доступных услуг. Добавьте первую услугу!</p>
+    </div>
+
+    <div *ngFor="let service of services" class="service-card">
+      <div class="service-details">
+        <div class="service-header">
+          <h3>{{ service.name }}</h3>
+          <span class="service-price">{{ service.price }} ₽</span>
+        </div>
+        <p class="service-description">{{ service.description }}</p>
+      </div>
+      <div class="service-actions">
+        <button [routerLink]="['/admin/room/services/new/', service.id]" class="btn btn-secondary">Редактировать</button>
+        <button (click)="deleteService(service.id!)" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>

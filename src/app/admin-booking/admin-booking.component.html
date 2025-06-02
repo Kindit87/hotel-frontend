@@ -1,0 +1,49 @@
+<div class="admin-container">
+  <h1 class="admin-title">Управление бронированиями</h1>
+
+  <div class="search-container">
+    <input type="text"
+           [(ngModel)]="searchTerm"
+           placeholder="Поиск по номеру..."
+           class="search-input" />
+    <button (click)="loadBookings()" class="refresh-button" [disabled]="loading">
+      {{ loading ? "Загрузка..." : "Обновить" }}
+    </button>
+  </div>
+
+  <div class="users-table-container">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Номер</th>
+          <th>Дата заезда</th>
+          <th>Дата выезда</th>
+          <th>Доп. услуги</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of filteredBookings">
+          <td>{{ booking.room.number }}</td>
+          <td>{{ formatDate(booking.checkInDate) }}</td>
+          <td>{{ formatDate(booking.checkOutDate) }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let service of booking.services">
+                {{ service.name }}
+              </li>
+            </ul>
+          </td>
+          <td class="actions-cell">
+            <button (click)="cancelBooking(booking.id)" class="delete-button">
+              Отменить
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredBookings.length === 0 && !loading">
+          <td colspan="5" class="no-users">Нет бронирований</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

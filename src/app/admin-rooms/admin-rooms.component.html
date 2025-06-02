@@ -1,0 +1,43 @@
+<div class="admin-rooms-container">
+  <div class="admin-rooms-header">
+    <h2>Номера отеля</h2>
+    <button routerLink="/admin/rooms/new" class="btn btn-primary">Добавить номер</button>
+  </div>
+
+  <div class="admin-rooms">
+    <div *ngIf="rooms.length === 0" class="no-rooms">
+      <p>Нет доступных номеров. Добавьте первый номер!</p>
+    </div>
+
+    <div *ngFor="let room of rooms" class="room-card">
+      <div class="room-image">
+        <img [src]="room.imagePath" alt="{{ room.name }}">
+      </div>
+      <div class="room-details">
+        <div class="room-header">
+          <h3>{{ room.name }}</h3>
+          <span class="room-number">№ {{ room.number }}</span>
+        </div>
+        <p class="room-description">{{ room.description }}</p>
+        <div class="room-info">
+          <div class="room-capacity">
+            <span>Вместимость: {{ room.capacity }} чел.</span>
+          </div>
+          <div class="room-services" *ngIf="room.roomServices.length">
+            <span>Услуги: {{ getServiceNames(room) }}</span>
+          </div>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">
+            <span class="price">{{ getTotalPrice(room) }} ₽</span>
+            <span class="price-label">за ночь</span>
+          </div>
+          <div class="room-actions">
+            <button [routerLink]="['/admin/rooms/new', room.id]" class="btn btn-secondary">Редактировать</button>
+            <button (click)="deleteRoom(room.id!)" class="btn btn-danger">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

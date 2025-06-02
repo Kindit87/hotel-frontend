@@ -1,0 +1,62 @@
+<div class="room-list-container">
+  <h1>Мои забронированные номера</h1>
+
+  <div *ngIf="loading" class="loading-container">
+    <div *ngFor="let i of [1, 2, 3]" class="room-card skeleton">
+      <div class="room-image skeleton-image"></div>
+      <div class="room-details">
+        <div class="skeleton-text skeleton-title"></div>
+        <div class="skeleton-text skeleton-subtitle"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-button"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+    <h2>У вас пока нет забронированных номеров</h2>
+    <p>Забронируйте номер, чтобы он появился в этом списке</p>
+  </div>
+
+  <div *ngIf="!loading && bookings.length > 0" class="rooms-grid">
+    <div *ngFor="let booking of bookings" class="room-card">
+      <div class="room-image">
+        <img [src]="booking.room.imagePath" [alt]="booking.room.name">
+      </div>
+      <div class="room-details">
+        <h3>{{ booking.room.name }}</h3>
+
+        <div class="booking-info">
+          <div class="info-item">
+            <strong>Дата:</strong>
+            <span>{{ formatDate(booking.checkInDate) }} – {{ formatDate(booking.checkOutDate) }}</span>
+          </div>
+
+          <div class="info-item">
+            <strong>Номер:</strong>
+            <span>№{{ booking.room.number }}</span>
+          </div>
+
+          <div class="info-item">
+            <strong>Цена:</strong>
+            <span>{{ booking.room.price | number }} ₽</span>
+          </div>
+        </div>
+
+        <div *ngIf="booking.services.length > 0" class="additional-services">
+          <strong>Доп. услуги:</strong>
+          <ul>
+            <li *ngFor="let service of booking.services">
+              {{ service.name }} — {{ service.price | number }} ₽
+            </li>
+          </ul>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-danger" (click)="cancelBooking(booking.id)">Отменить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

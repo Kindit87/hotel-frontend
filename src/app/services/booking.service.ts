@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookingRequest, BookingResponse } from '../models/booking';
 import { AuthService } from './auth.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = 'http://server.hotel.kindit.org/api/booking';
+  private apiUrl = environment + '/booking';
 
   constructor(private http: HttpClient) { }
 

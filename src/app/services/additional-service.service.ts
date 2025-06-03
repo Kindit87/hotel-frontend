@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AdditionalService } from '../models/service';
 import { AuthService } from './auth.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdditionalServiceService {
-  private apiUrl = 'http://server.hotel.kindit.org/api/service';
+  private apiUrl = environment.apiUrl + '/service';
 
   constructor(private http: HttpClient) { }
 

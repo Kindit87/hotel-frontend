@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   hotel-client:
+    container_name: hotel-frontend
     build:
       context: .
       dockerfile: Dockerfile

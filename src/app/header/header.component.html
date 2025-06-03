@@ -37,7 +37,7 @@
         <div class="user-menu-container">
           <button class="user-button" (click)="toggleUserMenu()" aria-label="Меню пользователя">
             <span class="user-name" *ngIf="user; else guest">
-              {{ user.firstName + ' ' + user.lastName }}
+              {{ user.firstname + ' ' + user.lastname }}
             </span>
             <ng-template #guest>
               <span class="user-name">Гость</span>

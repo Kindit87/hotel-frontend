@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Room } from '../models/room';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-room-card',
@@ -8,4 +9,5 @@ import { Room } from '../models/room';
 })
 export class RoomCardComponent {
   @Input() room!: Room;
+  protected readonly environment = environment;
 }

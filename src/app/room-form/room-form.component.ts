@@ -5,6 +5,7 @@ import { AdditionalServiceService } from "../services/additional-service.service
 import { AdditionalService } from "../models/service";
 import { Room } from "../models/room";
 import { RoomsService } from "../services/rooms.service";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: "app-room-form",
@@ -61,16 +62,16 @@ export class RoomFormComponent implements OnInit {
     this.roomService.getRoom(id).subscribe((room) => {
       this.roomForm.patchValue({
         number: room.number,
-        name: room.name,
+        name: room.number,
         description: room.description,
-        price: room.price,
+        price: room.pricePerNight,
         capacity: room.capacity,
         imagePath: room.imagePath,
-        roomServices: room.roomServices
+        roomServices: room.additionalServices
       });
 
       if (room.imagePath) {
-        this.imagePreview = room.imagePath;
+        this.imagePreview = environment.apiUrl + "/room/image/" + room.imagePath;
       }
     });
   }

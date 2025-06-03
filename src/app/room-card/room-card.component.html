@@ -1,19 +1,30 @@
 <div class="room-card">
   <div class="room-card-image">
-    <img [src]="room.imagePath" [alt]="'Room ' + room.number">
+    <img [src]="environment.apiUrl + '/room/image/' + room.imagePath" [alt]="'Room ' + room.number">
   </div>
   <div class="room-card-content">
-    <h3 class="room-card-title">{{ room.name }}</h3>
+    <h3 class="room-card-title">Номер {{ room.number }}</h3>
     <div class="room-card-details">
       <div class="room-card-detail">
         <span class="room-card-label">Вместимость:</span>
-        <span class="room-card-value">{{ room.capacity }} человек</span>
+        <span class="room-card-value">
+          {{ room.capacity !== null ? room.capacity + ' человек' : 'Не указано' }}
+        </span>
       </div>
       <div class="room-card-detail">
         <span class="room-card-label">Цена за день:</span>
-        <span class="room-card-value room-card-price">{{ room.price }} ₽</span>
+        <span class="room-card-value room-card-price">{{ room.pricePerNight }} ₽</span>
+      </div>
+      <div class="room-card-detail">
+        <span class="room-card-label">Доступность:</span>
+        <span class="room-card-value" [ngClass]="{ 'text-green': room.available, 'text-red': !room.available }">
+          {{ room.available ? 'Доступен' : 'Недоступен' }}
+        </span>
       </div>
     </div>
-    <a routerLink="/room/book/{{ room.id }}"><button class="room-card-button">Забронировать</button></a>
+    <a *ngIf="room.available" [routerLink]="'/room/book/' + room.id">
+      <button class="room-card-button">Забронировать</button>
+    </a>
+    <button *ngIf="!room.available" class="room-card-button" disabled>Недоступен</button>
   </div>
 </div>

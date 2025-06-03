@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class RoomsService {
-  private apiUrl = environment + '/room';
+  private apiUrl = environment.apiUrl + '/room';
 
   constructor(private http: HttpClient) { }
 
@@ -26,11 +26,11 @@ export class RoomsService {
   }
 
   getAvailableRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiUrl + "/all/available", { headers: this.getAuthHeaders() });
+    return this.http.get<Room[]>(this.apiUrl + "/all/available");
   }
 
   getRoom(id: number): Observable<Room> {
-    return this.http.get<Room>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<Room>(`${this.apiUrl}/${id}`);
   }
 
   createRoom(room: Room): Observable<Room> {

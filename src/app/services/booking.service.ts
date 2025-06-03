@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = environment + '/booking';
+  private apiUrl = environment.apiUrl + '/booking';
 
   constructor(private http: HttpClient) { }
 
@@ -26,11 +26,11 @@ export class BookingService {
   }
 
   getBookings(): Observable<BookingResponse[]> {
-    return this.http.get<BookingResponse[]>(`${this.apiUrl}`, { headers: this.getAuthHeaders() });
+    return this.http.get<BookingResponse[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
 
   getMyBookings(): Observable<BookingResponse[]> {
-    return this.http.get<BookingResponse[]>(`${this.apiUrl}/my`, { headers: this.getAuthHeaders() });
+    return this.http.get<BookingResponse[]>(`${this.apiUrl}/me/all`, { headers: this.getAuthHeaders() });
   }
 
   cancelBooking(bookingId: number): Observable<any> {

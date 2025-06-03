@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class AdditionalServiceService {
-  private apiUrl = environment.apiUrl + '/service';
+  private apiUrl = environment.apiUrl + '/additionalService';
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class AdditionalServiceService {
   }
 
   getServices(): Observable<AdditionalService[]> {
-    return this.http.get<AdditionalService[]>(this.apiUrl, { headers: this.getAuthHeaders() });
+    return this.http.get<AdditionalService[]>(this.apiUrl + "/all", { headers: this.getAuthHeaders() });
   }
 
   getService(id: number): Observable<AdditionalService> {

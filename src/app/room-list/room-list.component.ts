@@ -15,6 +15,7 @@ export class RoomListComponent implements OnInit {
   ngOnInit(): void {
     this.roomsService.getAvailableRooms().subscribe(rooms => {
       this.rooms = rooms;
+      console.log(this.rooms);
     });
   }
 }

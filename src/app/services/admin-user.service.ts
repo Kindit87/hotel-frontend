@@ -30,7 +30,7 @@ export class AdminUserService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users`, { headers: this.getAuthHeaders() });
+    return this.http.get<User[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
 
   updateUser(user: User): Observable<void> {

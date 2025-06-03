@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 export interface User {
   email: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   role: string;
+  image: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://server.hotel.kindit.org/api/auth';
+  private apiUrl = environment.apiUrl + '/auth';
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
@@ -24,6 +26,7 @@ export class AuthService {
 
   private loadUserFromStorage() {
     const userData = localStorage.getItem('user');
+    console.log(userData);
     if (userData) {
       try {
         this.userSubject.next(JSON.parse(userData));
@@ -44,7 +47,7 @@ export class AuthService {
 
     const headers = { Authorization: `Bearer ${token}` };
 
-    this.http.get<User>(`${this.apiUrl}/me`, { headers }).subscribe({
+    this.http.get<User>(`${environment.apiUrl}/user/me`, { headers }).subscribe({
       next: (user) => {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
@@ -57,7 +60,7 @@ export class AuthService {
   }
 
   login(credentials: { email: string; password: string }): Observable<{ token: string; user: User }> {
-    return this.http.post<{ token: string; user: User }>(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post<{ token: string; user: User }>(`${this.apiUrl}/authenticate`, credentials).pipe(
       tap(response => {
         this.handleAuth(response);
         this.fetchUser();
@@ -65,11 +68,8 @@ export class AuthService {
     );
   }
 
-  private handleAuth(response: { token: string; user: User }) {
+  private handleAuth(response: { token: string }) {
     localStorage.setItem('token', response.token);
-    localStorage.setItem('user', JSON.stringify(response.user));
-    console.log(localStorage.getItem('user'))
-    this.userSubject.next(response.user);
   }
 
   logout() {

@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room';
 import { AuthService } from './auth.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomsService {
-  private apiUrl = 'http://server.hotel.kindit.org/api/room';
+  private apiUrl = environment + '/room';
 
   constructor(private http: HttpClient) { }
 
@@ -21,11 +22,11 @@ export class RoomsService {
   }
 
   getRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiUrl, { headers: this.getAuthHeaders() });
+    return this.http.get<Room[]>(this.apiUrl + "/all", { headers: this.getAuthHeaders() });
   }
 
   getAvailableRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiUrl + "/available", { headers: this.getAuthHeaders() });
+    return this.http.get<Room[]>(this.apiUrl + "/all/available", { headers: this.getAuthHeaders() });
   }
 
   getRoom(id: number): Observable<Room> {

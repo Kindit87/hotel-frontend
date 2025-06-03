@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RoomsService } from "../services/rooms.service";
 import { Room } from "../models/room";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: "app-admin-rooms",
@@ -9,6 +10,7 @@ import { Room } from "../models/room";
 })
 export class AdminRoomsComponent implements OnInit {
   rooms: Room[] = [];
+  protected readonly environment = environment;
 
   constructor(private roomService: RoomsService) { }
 
@@ -24,13 +26,13 @@ export class AdminRoomsComponent implements OnInit {
   }
 
   getServiceNames(room: Room): string {
-    console.log(room.roomServices)
-    return room.roomServices?.length ? room.roomServices.map(service => service.name).join(", ") : "—";
+    console.log(room.additionalServices)
+    return room.additionalServices?.length ? room.additionalServices.map(service => service.name).join(", ") : "—";
   }
 
   getTotalPrice(room: Room): number {
-    const serviceSum = room.roomServices?.reduce((acc, curr) => acc + curr.price, 0) ?? 0;
-    return room.price + serviceSum;
+    const serviceSum = room.additionalServices?.reduce((acc, curr) => acc + curr.price, 0) ?? 0;
+    return room.pricePerNight + serviceSum;
   }
 
   deleteRoom(id: number): void {

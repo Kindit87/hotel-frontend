@@ -4,6 +4,7 @@ import { Room } from "../models/room";
 import { ActivatedRoute } from "@angular/router";
 import { BookingService } from "../services/booking.service";
 import { BookingRequest } from "../models/booking";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: "app-room-booking",
@@ -17,6 +18,7 @@ export class RoomBookingComponent implements OnInit {
   checkOutDate: string = this.getTomorrowDate();
   dateError = "";
   selectedServices: number[] = [];
+  protected readonly environment = environment;
 
   constructor(private route: ActivatedRoute, private roomsService: RoomsService, private bookingService: BookingService) { }
 
@@ -96,10 +98,10 @@ export class RoomBookingComponent implements OnInit {
 
   getTotalPrice(): number {
     const nights = this.getNights();
-    let total = this.room ? this.room.price * nights : 0;
+    let total = this.room ? this.room.pricePerNight * nights : 0;
 
     this.selectedServices.forEach((serviceId) => {
-      const service = this.room?.roomServices.find((s) => s.id === serviceId);
+      const service = this.room?.additionalServices.find((s) => s.id === serviceId);
       if (service) {
         total += service.price;
       }
@@ -110,7 +112,7 @@ export class RoomBookingComponent implements OnInit {
 
   getFormattedPriceLine(): string {
     const nights = this.getNights();
-    const price = this.room?.price || 0;
+    const price = this.room?.pricePerNight || 0;
     const daysText = this.getDaysText(nights);
     return `${price * nights} ₽ × ${nights} ${daysText} = ${price * nights} ₽`;
   }
@@ -155,5 +157,4 @@ export class RoomBookingComponent implements OnInit {
       },
     });
   }
-
 }

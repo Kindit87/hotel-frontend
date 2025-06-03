@@ -1,10 +1,10 @@
 <div class="room-booking-container">
   <div class="room-image">
-    <img [src]="room?.imagePath" [alt]="room?.name">
+    <img [src]="environment.apiUrl + '/room/image/' + room?.imagePath" [alt]="room?.number">
   </div>
 
   <div class="room-details">
-    <h2 class="room-name">{{ room?.name }}</h2>
+    <h2 class="room-name">{{ room?.number }}</h2>
 
     <div class="room-capacity">
       <span>{{ room?.capacity }} {{ room?.capacity === 1 ? 'человек' : 'человека' }}</span>
@@ -40,13 +40,13 @@
 
     <div class="room-price">
       <span class="price-label">Цена за ночь:</span>
-      <span class="price-value">{{ room?.price }} ₽</span>
+      <span class="price-value">{{ room?.pricePerNight }} ₽</span>
     </div>
 
     <div class="additional-services">
       <h3>Дополнительные услуги</h3>
       <ul class="services-list">
-        <li *ngFor="let service of room?.roomServices"
+        <li *ngFor="let service of room?.additionalServices"
             class="service-item"
             [class.selected]="isServiceSelected(service.id!)"
             (click)="toggleService(service.id!)">

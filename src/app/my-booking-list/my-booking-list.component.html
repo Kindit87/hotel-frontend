@@ -22,10 +22,10 @@
   <div *ngIf="!loading && bookings.length > 0" class="rooms-grid">
     <div *ngFor="let booking of bookings" class="room-card">
       <div class="room-image">
-        <img [src]="booking.room.imagePath" [alt]="booking.room.name">
+        <img [src]="booking.room.imagePath" [alt]="booking.room.number">
       </div>
       <div class="room-details">
-        <h3>{{ booking.room.name }}</h3>
+        <h3>{{ booking.room.number }}</h3>
 
         <div class="booking-info">
           <div class="info-item">
@@ -40,7 +40,7 @@
 
           <div class="info-item">
             <strong>Цена:</strong>
-            <span>{{ booking.room.price | number }} ₽</span>
+            <span>{{ booking.room.pricePerNight | number }} ₽</span>
           </div>
         </div>
 

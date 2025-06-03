@@ -19,7 +19,7 @@ export class HeaderComponent {
     this.authService.user$.subscribe(user => {
       this.user = user;
 
-      if (this.user?.role == 'Admin') {
+      if (this.user?.role == 'ADMIN') {
         this.navItems.push(
           { label: 'Мои бронирования', route: '/booking/list/my' },
           { label: 'Бронирования', route: '/admin/booking/list' },
@@ -27,22 +27,21 @@ export class HeaderComponent {
           { label: 'Управление комнатами', route: '/admin/rooms' },
           { label: 'Доп услуги', route: '/admin/room/services' }
         )
-      } else if (this.user?.role == 'Manager') {
+      } else if (this.user?.role == 'MANAGER') {
         this.navItems.push(
           { label: 'Мои бронирования', route: '/booking/list/my' },
           { label: 'Бронирования', route: '/admin/booking/list' },
           { label: 'Управление комнатами', route: '/admin/rooms' },
           { label: 'Доп услуги', route: '/admin/room/services' }
         )
-      } else if (this.user?.role == 'User') {
+      } else if (this.user?.role == 'USER') {
         this.navItems.push(
           { label: 'Мои бронирования', route: '/booking/list/my' }
         )
       }
       else {
         this.navItems = [
-          { label: 'Комнаты', route: '/rooms' }, 
-          
+          { label: 'Комнаты', route: '/rooms' }
         ];
       }
     });

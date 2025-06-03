@@ -22,8 +22,8 @@ export class AdminUsersComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.editForm = this.formBuilder.group({
-      firstName: ["", Validators.required],
-      lastName: ["", [Validators.required]],
+      firstname: ["", Validators.required],
+      lastname: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: [""],
       role: ["", Validators.required],
@@ -58,8 +58,8 @@ export class AdminUsersComponent implements OnInit {
     this.selectedUser = user;
 
     this.editForm.patchValue({
-      firstName: this.selectedUser.firstName,
-      lastName: this.selectedUser.lastName,
+      firstname: this.selectedUser.firstname,
+      lastname: this.selectedUser.lastname,
       email: this.selectedUser.email,
       role: this.selectedUser.role,
     })

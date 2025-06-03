@@ -26,7 +26,6 @@ export class AuthService {
 
   private loadUserFromStorage() {
     const userData = localStorage.getItem('user');
-    console.log(userData);
     if (userData) {
       try {
         this.userSubject.next(JSON.parse(userData));

@@ -30,7 +30,7 @@ export class AdditionalServiceService {
   }
 
   createService(service: AdditionalService): Observable<AdditionalService> {
-    return this.http.put<AdditionalService>(this.apiUrl, service, { headers: this.getAuthHeaders() });
+    return this.http.post<AdditionalService>(this.apiUrl, service, { headers: this.getAuthHeaders() });
   }
 
   updateService(id: number, service: AdditionalService): Observable<AdditionalService> {

@@ -25,7 +25,6 @@ export class AdminUserService {
     const token = AuthService.getToken();
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     });
   }
 
@@ -33,15 +32,15 @@ export class AdminUserService {
     return this.http.get<User[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
 
-  updateUser(user: User): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/user/${user.id}`, user, { headers: this.getAuthHeaders() });
+  updateUser(user: FormData): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${user.get('id')}`, user, { headers: this.getAuthHeaders() });
   }
 
   deleteUser(userId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/user/${userId}`, { headers: this.getAuthHeaders() });
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`, { headers: this.getAuthHeaders() });
   }
 
   changeUserRole(userId: string, newRole: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/user/${userId}/role`, { role: newRole }, { headers: this.getAuthHeaders() });
+    return this.http.post<void>(`${this.apiUrl}/${userId}/role`, { role: newRole }, { headers: this.getAuthHeaders() });
   }
 }

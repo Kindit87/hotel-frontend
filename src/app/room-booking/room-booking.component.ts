@@ -143,7 +143,7 @@ export class RoomBookingComponent implements OnInit {
       roomId: roomId,
       checkInDate: new Date(this.checkInDate).toISOString(),
       checkOutDate: new Date(this.checkOutDate).toISOString(),
-      serviceIds: this.selectedServices ?? []
+      additionalServiceIds: this.selectedServices ?? []
     };
 
     this.bookingService.createBooking(bookingRequest).subscribe({

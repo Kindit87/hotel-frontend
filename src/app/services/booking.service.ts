@@ -22,7 +22,7 @@ export class BookingService {
   }
 
   createBooking(request: BookingRequest): Observable<any> {
-    return this.http.post(this.apiUrl, request, { headers: this.getAuthHeaders() });
+    return this.http.post(`${this.apiUrl}/me`, request, { headers: this.getAuthHeaders() });
   }
 
   getBookings(): Observable<BookingResponse[]> {

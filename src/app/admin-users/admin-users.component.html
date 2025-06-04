@@ -49,16 +49,16 @@
       <form [formGroup]="editForm" (ngSubmit)="saveUser()" class="edit-form">
         <div class="form-group">
           <label for="firstName">Имя</label>
-          <input id="firstName" formControlName="firstName" type="text" class="form-input" />
-          <div *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched" class="error-message">
+          <input id="firstName" formControlName="firstname" type="text" class="form-input" />
+          <div *ngIf="editForm.get('firstname')?.invalid && editForm.get('firstname')?.touched" class="error-message">
             Имя обязяательно
           </div>
         </div>
 
         <div class="form-group">
           <label for="lastName">Фамилия</label>
-          <input id="lastName" formControlName="lastName" type="text" class="form-input" />
-          <div *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched" class="error-message">
+          <input id="lastName" formControlName="lastname" type="text" class="form-input" />
+          <div *ngIf="editForm.get('lastname')?.invalid && editForm.get('lastname')?.touched" class="error-message">
             Фамилия обязяательна
           </div>
         </div>
@@ -79,9 +79,9 @@
         <div class="form-group">
           <label for="role">Роль</label>
           <select id="role" formControlName="role" class="form-select">
-            <option value="User">User</option>
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
+            <option value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+            <option value="MANAGER">Manager</option>
           </select>
         </div>
 

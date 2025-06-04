@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdditionalServiceService } from "../services/additional-service.service";
 import { AdditionalService } from "../models/service";
-import { Room } from "../models/room";
 import { RoomsService } from "../services/rooms.service";
 import {environment} from '../../environments/environment';
 
@@ -79,16 +78,21 @@ export class RoomFormComponent implements OnInit {
   onSubmit(): void {
     if (this.roomForm.invalid) return;
 
-    const roomData: Room = {
-      ...this.roomForm.value,
-      id: this.roomId ?? 0,
-      isAvailable: true,
-      roomServices: this.roomForm.value.roomServices.map(
-        (service: AdditionalService) => service.id
-      )
-    };
+    const roomData = new FormData;
 
-    console.log(roomData);
+    roomData.append("number", this.roomForm.value.number);
+    roomData.append("description", this.roomForm.value.description);
+    roomData.append("pricePerNight", this.roomForm.value.price);
+    roomData.append("capacity", this.roomForm.value.capacity);
+
+    if (this.isBase64Image(this.roomForm.value.imagePath)) {
+      roomData.append("image", this.base64ToFile(this.roomForm.value.imagePath, ""));
+    }
+
+    roomData.append("additionalServiceIds",
+      this.roomForm.value.roomServices.map(
+      (service: AdditionalService) => service.id
+    ));
 
     const request = this.isEditMode && this.roomId
       ? this.roomService.updateRoom(this.roomId, roomData)
@@ -97,6 +101,27 @@ export class RoomFormComponent implements OnInit {
     request.subscribe(() => {
       this.router.navigate(["/admin/rooms"]);
     });
+  }
+
+  base64ToFile(base64String: string, filename: string): File {
+    console.log(base64String)
+
+    const arr = base64String.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1] || 'application/octet-stream';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  isBase64Image(str: string): boolean {
+    const base64Regex = /^data:image\/(png|jpeg|jpg|gif|bmp|webp);base64,[A-Za-z0-9+/=\s]+$/;
+    return base64Regex.test(str.trim());
   }
 
   onFileSelected(event: Event): void {

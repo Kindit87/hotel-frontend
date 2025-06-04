@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../services/booking.service';
 import { BookingResponse } from '../models/booking';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-my-booking-list',
@@ -10,6 +11,7 @@ import { BookingResponse } from '../models/booking';
 export class MyBookingListComponent implements OnInit {
   bookings: BookingResponse[] = [];
   loading = true;
+  protected readonly environment = environment;
 
   constructor(private bookingService: BookingService) { }
 
@@ -21,6 +23,9 @@ export class MyBookingListComponent implements OnInit {
     this.bookingService.getMyBookings().subscribe({
       next: (data) => {
         this.bookings = data;
+        console.log(data);
+        console.log(this.bookings);
+        console.log(this.bookings.length);
         this.loading = false;
       },
       error: (error) => {

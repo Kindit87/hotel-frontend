@@ -5,7 +5,7 @@ export interface BookingRequest {
   roomId: number;
   checkInDate: string;
   checkOutDate: string;
-  serviceIds: number[];
+  additionalServiceIds: number[];
 }
 
 export interface BookingResponse {
@@ -13,5 +13,5 @@ export interface BookingResponse {
   room: Room;
   checkInDate: string;
   checkOutDate: string;
-  services: AdditionalService[]; 
+  additionalService: AdditionalService[];
 }

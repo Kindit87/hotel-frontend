@@ -74,14 +74,23 @@ export class AdminUsersComponent implements OnInit {
   async saveUser(): Promise<void> {
     if (!this.selectedUser || !this.editForm.valid) return;
 
-    const updatedUser = { id: this.selectedUser.id, ...this.editForm.value };
+    const updatedUser = new FormData();
+    updatedUser.append("id", this.selectedUser.id);
+    updatedUser.append("firstname", this.editForm.value.firstname);
+    updatedUser.append("lastname", this.editForm.value.lastname);
+    updatedUser.append("email", this.editForm.value.email);
+    updatedUser.append("role", this.editForm.value.role);
 
-    if (!updatedUser.password) {
-      delete updatedUser.password;
+    const password = this.editForm.value.password;
+    if (password && password.trim() !== "") {
+      updatedUser.append("password", password);
     }
+
+    console.log(updatedUser);
 
     this.userService.updateUser(updatedUser).subscribe({
       next: (response) => {
+        console.log(response)
         this.loadUsers();
         this.closeEditModal();
       },
@@ -93,7 +102,6 @@ export class AdminUsersComponent implements OnInit {
       }
     });
   }
-
 
   async deleteUser(userId: string): Promise<void> {
     if (!confirm("Are you sure you want to delete this user?")) return

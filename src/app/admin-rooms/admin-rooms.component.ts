@@ -21,12 +21,10 @@ export class AdminRoomsComponent implements OnInit {
   loadRooms(): void {
     this.roomService.getRooms().subscribe((rooms) => {
       this.rooms = rooms;
-      console.log(rooms)
     });
   }
 
   getServiceNames(room: Room): string {
-    console.log(room.additionalServices)
     return room.additionalServices?.length ? room.additionalServices.map(service => service.name).join(", ") : "—";
   }
 

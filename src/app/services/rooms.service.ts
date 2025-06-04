@@ -17,7 +17,6 @@ export class RoomsService {
     const token = AuthService.getToken();
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     });
   }
 
@@ -33,11 +32,11 @@ export class RoomsService {
     return this.http.get<Room>(`${this.apiUrl}/${id}`);
   }
 
-  createRoom(room: Room): Observable<Room> {
-    return this.http.put<Room>(this.apiUrl, room, { headers: this.getAuthHeaders() });
+  createRoom(room: FormData): Observable<Room> {
+    return this.http.post<Room>(this.apiUrl, room, { headers: this.getAuthHeaders() });
   }
 
-  updateRoom(id: number, room: Room): Observable<Room> {
+  updateRoom(id: number, room: FormData): Observable<Room> {
     return this.http.patch<Room>(`${this.apiUrl}/${id}`, room, { headers: this.getAuthHeaders() });
   }
 

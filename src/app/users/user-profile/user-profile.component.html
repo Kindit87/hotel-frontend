@@ -1,0 +1,62 @@
+<div class="room-form-container">
+  <h2>{{ isEditMode ? 'Редактирование профиля' : 'Создание нового профиля' }}</h2>
+
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="room-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="image">Изображение</label>
+        <div class="image-upload-container">
+          <div class="image-preview" *ngIf="imagePreview">
+            <img [src]="imagePreview" alt="Предпросмотр изображения">
+          </div>
+          <div class="image-upload">
+            <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+            <label for="image" class="file-label">Выбрать изображение</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Email</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div class="error-message" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+          Название обязательно
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div class="error-message" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+          Имя обязательно
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Фамилия</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div class="error-message" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+          Фамилия обязательно
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Название</label>
+      <input type="text" id="name" formControlName="name" class="form-control">
+      <div class="error-message" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+        Название обязательно
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" routerLink="/rooms" class="btn btn-secondary">Отмена</button>
+      <button type="submit" [disabled]="roomForm.invalid" class="btn btn-primary">
+        {{ isEditMode ? 'Сохранить изменения' : 'Создать номер' }}
+      </button>
+    </div>
+  </form>
+</div>

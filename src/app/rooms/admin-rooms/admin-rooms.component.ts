@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { RoomsService } from "../services/rooms.service";
-import { Room } from "../models/room";
-import {environment} from '../../environments/environment';
+import { RoomsService } from "../../services/rooms.service";
+import { Room } from "../../models/room";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: "app-admin-rooms",

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AdditionalServiceService } from "../services/additional-service.service";
-import { AdditionalService } from "../models/service";
-import { RoomsService } from "../services/rooms.service";
-import {environment} from '../../environments/environment';
+import { AdditionalServiceService } from "../../services/additional-service.service";
+import { AdditionalService } from "../../models/service";
+import { RoomsService } from "../../services/rooms.service";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: "app-room-form",

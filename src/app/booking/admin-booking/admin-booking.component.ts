@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../services/booking.service';
-import { BookingResponse } from '../models/booking';
+import { BookingService } from '../../services/booking.service';
+import { BookingResponse } from '../../models/booking';
 import { lastValueFrom } from 'rxjs';
 
 @Component({

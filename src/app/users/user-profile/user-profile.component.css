@@ -38,6 +38,11 @@ label {
   color: #333;
 }
 
+.form-select {
+  width: 40%;
+  padding: 10px 12px;
+}
+
 .form-control {
   width: 95%;
   padding: 10px 12px;
@@ -61,7 +66,8 @@ label {
 .image-upload-container {
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: start;
+  flex-direction: column;
 }
 
 .image-preview {

@@ -75,7 +75,7 @@ export class AdminUsersComponent implements OnInit {
     if (!this.selectedUser || !this.editForm.valid) return;
 
     const updatedUser = new FormData();
-    updatedUser.append("id", this.selectedUser.id);
+    updatedUser.append("id", this.selectedUser.id.toString());
     updatedUser.append("firstname", this.editForm.value.firstname);
     updatedUser.append("lastname", this.editForm.value.lastname);
     updatedUser.append("email", this.editForm.value.email);

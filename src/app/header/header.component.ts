@@ -21,6 +21,8 @@ export class HeaderComponent {
     this.authService.user$.subscribe(user => {
       this.user = user;
 
+      this.navItems = [{ label: 'Комнаты', route: '/rooms' }];
+
       if (this.user?.role == 'ADMIN') {
         this.navItems.push(
           { label: 'Мои бронирования', route: '/booking/list/my' },

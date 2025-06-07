@@ -4,15 +4,6 @@ import { Observable } from "rxjs";
 import {AuthService, User} from "./auth.service";
 import { environment } from "../../environments/environment";
 
-export interface User {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  role: string;
-}
-
 @Injectable({
   providedIn: "root",
 })

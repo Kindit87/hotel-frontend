@@ -23,15 +23,23 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
 
-  updateUser(user: FormData): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/${user.get('id')}`, user, { headers: this.getAuthHeaders() });
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  deleteUser(userId: string): Observable<void> {
+  getMe(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers: this.getAuthHeaders() });
+  }
+
+  updateUser(id: number, user: FormData): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}`, user, { headers: this.getAuthHeaders() });
+  }
+
+  updateMe(user: FormData): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/me`, user, { headers: this.getAuthHeaders() });
+  }
+
+  deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`, { headers: this.getAuthHeaders() });
-  }
-
-  changeUserRole(userId: string, newRole: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${userId}/role`, { role: newRole }, { headers: this.getAuthHeaders() });
   }
 }

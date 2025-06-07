@@ -88,7 +88,7 @@ export class AdminUsersComponent implements OnInit {
 
     console.log(updatedUser);
 
-    this.userService.updateUser(updatedUser).subscribe({
+    this.userService.updateUser(this.selectedUser.id, updatedUser).subscribe({
       next: (response) => {
         console.log(response)
         this.loadUsers();
@@ -103,7 +103,7 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  async deleteUser(userId: string): Promise<void> {
+  async deleteUser(userId: number): Promise<void> {
     if (!confirm("Are you sure you want to delete this user?")) return
 
     this.userService.deleteUser(userId).subscribe({

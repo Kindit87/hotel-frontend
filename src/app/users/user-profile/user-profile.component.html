@@ -1,0 +1,69 @@
+<div class="room-form-container">
+  <h2>{{ isEditMode ? 'Редактирование профиля' : 'Создание нового профиля' }}</h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="room-form">
+    <div class="form-group">
+      <label for="image">Изображение профиля</label>
+      <div class="image-upload-container">
+        <div class="image-preview" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Предпросмотр изображения">
+        </div>
+        <div class="image-upload">
+          <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+          <label for="image" class="file-label">Выбрать изображение</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Email</label>
+        <input type="text" id="name" formControlName="email" class="form-control">
+        <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          Название обязательно
+        </div>
+      </div>
+
+      <div *ngIf="isAdmin" class="form-group">
+        <label for="name">Роль</label>
+        <select id="role" formControlName="role" class="form-select">
+          <option value="USER">User</option>
+          <option value="ADMIN">Admin</option>
+          <option value="MANAGER">Manager</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" id="name" formControlName="firstname" class="form-control">
+        <div class="error-message" *ngIf="userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched">
+          Имя обязательно
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Фамилия</label>
+        <input type="text" id="name" formControlName="lastname" class="form-control">
+        <div class="error-message" *ngIf="userForm.get('lastname')?.invalid && userForm.get('lastname')?.touched">
+          Фамилия обязательно
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Новый пароль</label>
+      <input type="text" id="name" formControlName="password" class="form-control">
+      <div class="error-message" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+        Название обязательно
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" routerLink="/rooms" class="btn btn-secondary">Отмена</button>
+      <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+        {{ isEditMode ? 'Сохранить изменения' : 'Создать профиль' }}
+      </button>
+    </div>
+  </form>
+</div>

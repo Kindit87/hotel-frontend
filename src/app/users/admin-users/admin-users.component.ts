@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
-import { AdminUserService } from "../services/admin-user.service"
+import { UserService } from "../../services/user.service"
 import { lastValueFrom } from "rxjs"
-import { User } from "../services/admin-user.service";
+import { User } from '../../services/auth.service';
 
 @Component({
   selector: "app-admin-users",
@@ -18,7 +18,7 @@ export class AdminUsersComponent implements OnInit {
   showEditModal = false
 
   constructor(
-    private readonly userService: AdminUserService,
+    private readonly userService: UserService,
     private formBuilder: FormBuilder,
   ) {
     this.editForm = this.formBuilder.group({
@@ -75,7 +75,7 @@ export class AdminUsersComponent implements OnInit {
     if (!this.selectedUser || !this.editForm.valid) return;
 
     const updatedUser = new FormData();
-    updatedUser.append("id", this.selectedUser.id);
+    updatedUser.append("id", this.selectedUser.id.toString());
     updatedUser.append("firstname", this.editForm.value.firstname);
     updatedUser.append("lastname", this.editForm.value.lastname);
     updatedUser.append("email", this.editForm.value.email);
@@ -88,7 +88,7 @@ export class AdminUsersComponent implements OnInit {
 
     console.log(updatedUser);
 
-    this.userService.updateUser(updatedUser).subscribe({
+    this.userService.updateUser(this.selectedUser.id, updatedUser).subscribe({
       next: (response) => {
         console.log(response)
         this.loadUsers();
@@ -103,7 +103,7 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  async deleteUser(userId: string): Promise<void> {
+  async deleteUser(userId: number): Promise<void> {
     if (!confirm("Are you sure you want to delete this user?")) return
 
     this.userService.deleteUser(userId).subscribe({

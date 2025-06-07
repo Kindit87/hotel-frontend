@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { RoomsService } from "../services/rooms.service";
-import { Room } from "../models/room";
+import { RoomsService } from "../../services/rooms.service";
+import { Room } from "../../models/room";
 import { ActivatedRoute } from "@angular/router";
-import { BookingService } from "../services/booking.service";
-import { BookingRequest } from "../models/booking";
-import {environment} from '../../environments/environment';
+import { BookingService } from "../../services/booking.service";
+import { BookingRequest } from "../../models/booking";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: "app-room-booking",

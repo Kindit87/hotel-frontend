@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core"
-import { AdditionalServiceService } from "../services/additional-service.service";
-import { AdditionalService } from "../models/service";
+import { AdditionalServiceService } from "../../services/additional-service.service";
+import { AdditionalService } from "../../models/service";
 
 @Component({
   selector: "app-admin-services",

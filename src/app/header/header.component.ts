@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService, User } from '../services/auth.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ export class HeaderComponent {
   user: User | null = null;
   isMenuOpen = false;
   isUserMenuOpen = false;
+  protected readonly environment = environment;
 
   navItems = [{ label: 'Комнаты', route: '/rooms' }];
 
@@ -18,6 +20,8 @@ export class HeaderComponent {
   ngOnInit() {
     this.authService.user$.subscribe(user => {
       this.user = user;
+
+      this.navItems = [{ label: 'Комнаты', route: '/rooms' }];
 
       if (this.user?.role == 'ADMIN') {
         this.navItems.push(

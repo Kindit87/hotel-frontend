@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
 export interface User {
+  id: number;
   email: string;
   firstname: string;
   lastname: string;

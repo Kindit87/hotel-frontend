@@ -33,9 +33,9 @@
       </nav>
 
       <div class="user-section">
-
         <div class="user-menu-container">
           <button class="user-button" (click)="toggleUserMenu()" aria-label="Меню пользователя">
+            <img class="user-avatar" *ngIf="user" src="{{ environment.apiUrl + '/user/image/' + user?.image }}" alt="">
             <span class="user-name" *ngIf="user; else guest">
               {{ user.firstname + ' ' + user.lastname }}
             </span>
@@ -49,7 +49,8 @@
 
           <div class="user-dropdown" *ngIf="isUserMenuOpen && user">
             <ul>
-              <li (click)="logout()"><a routerLink="/profile">Выйти</a></li>
+              <li><a routerLink="/profile">Профиль</a></li>
+              <li (click)="logout()"><a routerLink="/login">Выйти</a></li>
             </ul>
           </div>
 

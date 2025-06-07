@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AdditionalService } from '../models/service';
-import { AdditionalServiceService } from "../services/additional-service.service";
+import { AdditionalService } from '../../models/service';
+import { AdditionalServiceService } from "../../services/additional-service.service";
 
 @Component({
   selector: "app-service-form",

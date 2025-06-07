@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Room } from '../models/room';
-import {environment} from '../../environments/environment';
+import { Room } from '../../models/room';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-room-card',

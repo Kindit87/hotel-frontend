@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../services/booking.service';
-import { BookingResponse } from '../models/booking';
-import {environment} from '../../environments/environment';
+import { BookingService } from '../../services/booking.service';
+import { BookingResponse } from '../../models/booking';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-my-booking-list',

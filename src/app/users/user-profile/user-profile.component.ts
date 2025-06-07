@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AdditionalService} from '../../models/service';
-import {RoomsService} from '../../services/rooms.service';
-import {AdditionalServiceService} from '../../services/additional-service.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
+import {AuthService, User} from '../../services/auth.service';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -12,148 +11,124 @@ import {environment} from '../../../environments/environment';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-  roomForm!: FormGroup;
-  additionalServices: AdditionalService[] = [];
-  isEditMode = false;
-  roomId?: number;
+  userForm!: FormGroup;
+  isEditMode = true;
+  isAdmin = false;
+  userId?: number;
   imagePreview: string | null = null;
+  isImageUploaded = false;
+  protected readonly environment = environment;
 
   constructor(
     private fb: FormBuilder,
-    private roomService: RoomsService,
-    private additionalService: AdditionalServiceService,
+    private userService: UserService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.loadAdditionalServices();
 
     this.route.params.subscribe((params) => {
       if (params["id"]) {
         this.isEditMode = true;
-        this.roomId = +params["id"];
-        this.loadRoom(this.roomId);
+        this.userId = +params["id"];
+        this.loadUser(this.userId);
+      } else {
+        this.loadMe();
       }
     });
   }
 
   initForm(): void {
-    this.roomForm = this.fb.group({
-      number: ["", [Validators.required]],
-      name: ["", [Validators.required]],
-      description: ["", [Validators.required]],
-      price: [0, [Validators.required, Validators.min(0)]],
-      capacity: [1, [Validators.required, Validators.min(1)]],
-      imagePath: [""],
-      roomServices: [[] as AdditionalService[]]
+    this.userForm = this.fb.group({
+      firstname: ["", [Validators.required]],
+      lastname: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      password: [""],
+      image: [""],
+      role: ["USER", [Validators.required]],
     });
   }
 
-  loadAdditionalServices(): void {
-    this.additionalService.getServices().subscribe((services) => {
-      this.additionalServices = services;
+  loadUser(id: number): void {
+    this.userService.getUser(id).subscribe((user: User) => {
+      this.userForm.patchValue({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        image: user.image,
+        role: user.role,
+      });
     });
   }
 
-  loadRoom(id: number): void {
-    this.roomService.getRoom(id).subscribe((room) => {
-      this.roomForm.patchValue({
-        number: room.number,
-        name: room.number,
-        description: room.description,
-        price: room.pricePerNight,
-        capacity: room.capacity,
-        imagePath: room.imagePath,
-        roomServices: room.additionalServices
+  loadMe(): void {
+    this.userService.getMe().subscribe((user) => {
+      if (user.role === "ADMIN") {
+        this.isAdmin = true;
+      }
+
+      this.userForm.patchValue({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        image: user.image,
+        role: user.role,
       });
 
-      if (room.imagePath) {
-        this.imagePreview = environment.apiUrl + "/room/image/" + room.imagePath;
+      if (user.image) {
+        this.imagePreview = environment.apiUrl + "/user/image/" + user.image;
       }
     });
   }
 
   onSubmit(): void {
-    if (this.roomForm.invalid) return;
+    if (this.userForm.invalid) return;
 
-    const roomData = new FormData;
+    const userData = new FormData();
 
-    roomData.append("number", this.roomForm.value.number);
-    roomData.append("description", this.roomForm.value.description);
-    roomData.append("pricePerNight", this.roomForm.value.price);
-    roomData.append("capacity", this.roomForm.value.capacity);
+    userData.append("firstname", this.userForm.get("firstname")?.value);
+    userData.append("lastname", this.userForm.get("lastname")?.value);
+    userData.append("email", this.userForm.get("email")?.value);
+    userData.append("role", this.userForm.get("role")?.value);
 
-    if (this.isBase64Image(this.roomForm.value.imagePath)) {
-      roomData.append("image", this.base64ToFile(this.roomForm.value.imagePath, ""));
+    const password = this.userForm.get("password")?.value;
+    if (password) {
+      userData.append("password", password);
     }
 
-    roomData.append("additionalServiceIds",
-      this.roomForm.value.roomServices.map(
-        (service: AdditionalService) => service.id
-      ));
+    if (this.userForm.value.image && !this.isBase64Image(this.userForm.value.image) && this.isImageUploaded) {
+      userData.append("image", this.userForm.value.image, "");
+    }
 
-    const request = this.isEditMode && this.roomId
-      ? this.roomService.updateRoom(this.roomId, roomData)
-      : this.roomService.createRoom(roomData);
+    const request = this.userService.updateMe(userData)
 
     request.subscribe(() => {
-      this.router.navigate(["/admin/rooms"]);
+      this.authService.fetchUser();
+      this.router.navigate(["/"]);
     });
   }
-
-  base64ToFile(base64String: string, filename: string): File {
-    console.log(base64String)
-
-    const arr = base64String.split(',');
-    const mime = arr[0].match(/:(.*?);/)?.[1] || 'application/octet-stream';
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  }
-
   isBase64Image(str: string): boolean {
     const base64Regex = /^data:image\/(png|jpeg|jpg|gif|bmp|webp);base64,[A-Za-z0-9+/=\s]+$/;
     return base64Regex.test(str.trim());
   }
 
   onFileSelected(event: Event): void {
+    this.isImageUploaded = true;
+
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
+      this.userForm.patchValue({ image: file });
+      this.userForm.get('image')?.updateValueAndValidity();
+
+      // Для превью (если нужно показать)
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        this.roomForm.patchValue({ imagePath: this.imagePreview });
       };
       reader.readAsDataURL(file);
     }
-  }
-
-  isServiceSelected(serviceId: number): boolean {
-    const selected = this.roomForm.get("roomServices")?.value as AdditionalService[];
-    return selected.some((service) => service.id === serviceId);
-  }
-
-  toggleService(serviceId: number): void {
-    const selected = this.roomForm.get("roomServices")?.value as AdditionalService[] || [];
-
-    const existingService = selected.find(service => service.id === serviceId);
-
-    if (existingService) {
-      const index = selected.indexOf(existingService);
-      selected.splice(index, 1);
-    } else {
-      const serviceToAdd = this.additionalServices.find(service => service.id === serviceId);
-      if (serviceToAdd) selected.push(serviceToAdd);
-    }
-
-    this.roomForm.patchValue({ roomServices: selected });
   }
 }

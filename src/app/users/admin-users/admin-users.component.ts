@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { UserService } from "../../services/user.service"
 import { lastValueFrom } from "rxjs"
-import { User } from "../../services/admin-user.service";
+import { User } from '../../services/auth.service';
 
 @Component({
   selector: "app-admin-users",

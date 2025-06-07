@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
-import { AdminUserService } from "../../services/admin-user.service"
+import { UserService } from "../../services/user.service"
 import { lastValueFrom } from "rxjs"
 import { User } from "../../services/admin-user.service";
 
@@ -18,7 +18,7 @@ export class AdminUsersComponent implements OnInit {
   showEditModal = false
 
   constructor(
-    private readonly userService: AdminUserService,
+    private readonly userService: UserService,
     private formBuilder: FormBuilder,
   ) {
     this.editForm = this.formBuilder.group({

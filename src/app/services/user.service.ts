@@ -16,7 +16,7 @@ export interface User {
 @Injectable({
   providedIn: "root",
 })
-export class AdminUserService {
+export class UserService {
   private apiUrl = environment.apiUrl + '/user';
 
   constructor(private http: HttpClient) { }

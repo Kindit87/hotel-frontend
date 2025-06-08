@@ -112,7 +112,7 @@ export class UserProfileComponent {
   }
   isBase64Image(str: string): boolean {
     const base64Regex = /^data:image\/(png|jpeg|jpg|gif|bmp|webp);base64,[A-Za-z0-9+/=\s]+$/;
-    return base64Regex.test(str.trim());
+    return base64Regex.test(str);
   }
 
   onFileSelected(event: Event): void {

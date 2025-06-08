@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: AuthComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'admin/users', component: AdminUsersComponent },
+  { path: 'admin/user/:id', component: UserProfileComponent },
   { path: 'rooms', component: RoomListComponent },
   { path: 'room/book/:id', component: RoomBookingComponent },
   { path: 'admin/rooms', component: AdminRoomsComponent },

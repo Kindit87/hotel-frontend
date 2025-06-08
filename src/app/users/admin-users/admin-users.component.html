@@ -29,7 +29,7 @@
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
           <td class="actions-cell">
-            <button (click)="openEditModal(user)" class="edit-button">Edit</button>
+            <a routerLink="/admin/user/{{user.id}}" class="edit-button">Edit</a>
             <button (click)="deleteUser(user.id)" class="delete-button">Delete</button>
           </td>
         </tr>
@@ -47,6 +47,17 @@
         <button (click)="closeEditModal()" class="close-button">×</button>
       </div>
       <form [formGroup]="editForm" (ngSubmit)="saveUser()" class="edit-form">
+        <div class="form-group image-form">
+          <img *ngIf="imagePreview"
+               [src]="imagePreview"
+               alt="avatar preview"
+               class="avatar-image"/>
+          <img *ngIf="!imagePreview" [src]="environment.apiUrl + '/user/image/' + editForm.get('image')?.value"
+               alt="avatar"
+               class="avatar-image"/>
+          <input type="file" id="image" (change)="onFileSelected($event)" />
+        </div>
+
         <div class="form-group">
           <label for="firstName">Имя</label>
           <input id="firstName" formControlName="firstname" type="text" class="form-input" />

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { UserService } from "../../services/user.service"
 import { lastValueFrom } from "rxjs"
 import { User } from '../../services/auth.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: "app-admin-users",
@@ -16,6 +17,7 @@ export class AdminUsersComponent implements OnInit {
   searchTerm = ""
   editForm: FormGroup
   showEditModal = false
+  imagePreview: string | null = null;
 
   constructor(
     private readonly userService: UserService,
@@ -26,6 +28,7 @@ export class AdminUsersComponent implements OnInit {
       lastname: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: [""],
+      image: [""],
       role: ["", Validators.required],
     })
   }
@@ -38,6 +41,7 @@ export class AdminUsersComponent implements OnInit {
     try {
       this.loading = true
       this.users = await lastValueFrom(this.userService.getUsers());
+
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
@@ -54,16 +58,8 @@ export class AdminUsersComponent implements OnInit {
     )
   }
 
-  openEditModal(user: User): void {
-    this.selectedUser = user;
+  openEditModal(id: User): void {
 
-    this.editForm.patchValue({
-      firstname: this.selectedUser.firstname,
-      lastname: this.selectedUser.lastname,
-      email: this.selectedUser.email,
-      role: this.selectedUser.role,
-    })
-    this.showEditModal = true
   }
 
   closeEditModal(): void {
@@ -118,5 +114,23 @@ export class AdminUsersComponent implements OnInit {
       }
     });
   }
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      // Патчим file в форму
+      this.editForm.patchValue({ image: file });
+      this.editForm.get('image')?.updateValueAndValidity();
+
+      // Отображаем превью
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  protected readonly environment = environment;
 }
 

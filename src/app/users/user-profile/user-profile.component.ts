@@ -13,6 +13,7 @@ import {environment} from '../../../environments/environment';
 export class UserProfileComponent {
   userForm!: FormGroup;
   isEditMode = true;
+  isUserEditMode = false;
   isAdmin = false;
   userId?: number;
   imagePreview: string | null = null;
@@ -33,6 +34,7 @@ export class UserProfileComponent {
     this.route.params.subscribe((params) => {
       if (params["id"]) {
         this.isEditMode = true;
+        this.isUserEditMode = true;
         this.userId = +params["id"];
         this.loadUser(this.userId);
       } else {
@@ -61,6 +63,10 @@ export class UserProfileComponent {
         image: user.image,
         role: user.role,
       });
+
+      if (user.image) {
+        this.imagePreview = environment.apiUrl + "/user/image/" + user.image;
+      }
     });
   }
 
@@ -107,7 +113,11 @@ export class UserProfileComponent {
 
     request.subscribe(() => {
       this.authService.fetchUser();
-      this.router.navigate(["/"]);
+      if (this.isUserEditMode) {
+        this.router.navigate(["/admin/users"]);
+      } else {
+        this.router.navigate(["/"]);
+      }
     });
   }
   isBase64Image(str: string): boolean {

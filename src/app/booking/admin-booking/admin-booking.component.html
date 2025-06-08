@@ -29,7 +29,7 @@
           <td>{{ formatDate(booking.checkOutDate) }}</td>
           <td>
             <ul>
-              <li *ngFor="let service of booking.additionalService">
+              <li *ngFor="let service of booking.additionalServices">
                 {{ service.name }}
               </li>
             </ul>

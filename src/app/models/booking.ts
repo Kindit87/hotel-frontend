@@ -13,5 +13,6 @@ export interface BookingResponse {
   room: Room;
   checkInDate: string;
   checkOutDate: string;
-  additionalService: AdditionalService[];
+  additionalServices: AdditionalService[];
+  totalPrice: number;
 }

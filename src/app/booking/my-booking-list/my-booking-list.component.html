@@ -40,14 +40,14 @@
 
           <div class="info-item">
             <strong>Цена:</strong>
-            <span>{{ booking.room.pricePerNight | number }} ₽</span>
+            <span>{{ booking.totalPrice | number }} ₽</span>
           </div>
         </div>
 
-        <div *ngIf="booking.additionalService.length > 0" class="additional-services">
+        <div *ngIf="booking.additionalServices.length > 0" class="additional-services">
           <strong>Доп. услуги:</strong>
           <ul>
-            <li *ngFor="let service of booking.additionalService">
+            <li *ngFor="let service of booking.additionalServices">
               {{ service.name }} — {{ service.price | number }} ₽
             </li>
           </ul>

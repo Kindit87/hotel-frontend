@@ -120,7 +120,7 @@ h2 {
 .price {
   font-size: 20px;
   font-weight: 600;
-  color: #4a90e2;
+  color: #ED6A5A;
 }
 
 .price-label {
@@ -143,12 +143,12 @@ h2 {
 }
 
 .btn-primary {
-  background-color: #4a90e2;
+  background-color: #ED6A5A;
   color: white;
 }
 
   .btn-primary:hover {
-    background-color: #3a7bc8;
+    background-color: #eb523f;
   }
 
 .btn-secondary {

@@ -9,5 +9,7 @@ import {environment} from '../../../environments/environment';
 })
 export class RoomCardComponent {
   @Input() room!: Room;
+  @Input() checkInDate!: string;
+  @Input() checkOutDate!: string;
   protected readonly environment = environment;
 }

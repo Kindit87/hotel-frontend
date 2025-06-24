@@ -63,7 +63,7 @@
 
     .nav-list a:hover,
     .nav-list a.active {
-      color: #5a67d8;
+      color: #ED6A5A;
     }
 
       .nav-list a.active:after {
@@ -73,7 +73,7 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background-color: #5a67d8;
+        background-color: #ED6A5A;
       }
 
 /* User section styles */
@@ -100,7 +100,7 @@
   .search-button:hover,
   .notification-button:hover,
   .user-button:hover {
-    color: #5a67d8;
+    color: #ED6A5A;
   }
 
 .notification-button {
@@ -189,7 +189,7 @@
 
     .user-dropdown a:hover {
       background-color: #f7fafc;
-      color: #5a67d8;
+      color: #ED6A5A;
     }
 
 .divider {

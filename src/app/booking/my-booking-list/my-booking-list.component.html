@@ -1,5 +1,5 @@
 <div class="room-list-container">
-  <h1>Мои забронированные номера</h1>
+  <h6>Мои забронированные номера</h6>
 
   <div *ngIf="loading" class="loading-container">
     <div *ngFor="let i of [1, 2, 3]" class="room-card skeleton">
@@ -25,9 +25,25 @@
         <img [src]="environment.apiUrl + '/room/image/' + booking.room.imagePath" [alt]="booking.room.number">
       </div>
       <div class="room-details">
-        <h3>{{ booking.room.number }}</h3>
+        <h3>{{ booking.room.name }}</h3>
 
         <div class="booking-info">
+          <div class="info-status info-status-warning" *ngIf="booking.status === 'PENDING'">
+            Ожидает оплаты
+          </div>
+          <div class="info-status info-status-success" *ngIf="booking.status === 'CONFIRMED'">
+            Оплачено
+          </div>
+          <div class="info-status info-status-bad" *ngIf="booking.status === 'CANCELLED'">
+            Отменено
+          </div>
+          <div class="info-status info-status-success" *ngIf="booking.status === 'CHECKED_IN'">
+            Заселен
+          </div>
+          <div class="info-status info-status-neutral" *ngIf="booking.status === 'CHECKED_OUT'">
+            Выселен
+          </div>
+
           <div class="info-item">
             <strong>Дата:</strong>
             <span>{{ formatDate(booking.checkInDate) }} – {{ formatDate(booking.checkOutDate) }}</span>
@@ -54,7 +70,25 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-danger" (click)="cancelBooking(booking.id)">Отменить</button>
+          <!-- Оплата -->
+          <ng-container [ngSwitch]="booking.status">
+            <!-- Статусы, при которых показывается 'Оплачено' -->
+            <button *ngSwitchCase="'CONFIRMED'" class="btn btn-outline" disabled>Оплачено</button>
+            <button *ngSwitchCase="'CHECKED_IN'" class="btn btn-outline" disabled>Оплачено</button>
+            <button *ngSwitchCase="'CHECKED_OUT'" class="btn btn-outline" disabled>Оплачено</button>
+
+            <!-- Статус PENDING - показать кнопку оплаты -->
+            <button *ngSwitchCase="'PENDING'" class="btn btn-primary" (click)="payBooking(booking.id)">Оплатить</button>
+          </ng-container>
+
+          <!-- Отмена доступна, если не CANCELLED и не NO_SHOW -->
+          <button
+            class="btn btn-outline"
+            (click)="cancelBooking(booking.id)"
+            [disabled]="booking.status === 'CANCELLED' || booking.status === 'NO_SHOW'"
+          >
+            Отменить
+          </button>
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
           <td class="actions-cell">
-            <a routerLink="/admin/user/{{user.id}}" class="edit-button">Edit</a>
+            <a href="/admin/user/{{user.id}}" class="edit-button">Edit</a>
             <button (click)="deleteUser(user.id)" class="delete-button">Delete</button>
           </td>
         </tr>

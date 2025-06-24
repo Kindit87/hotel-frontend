@@ -22,10 +22,7 @@ export class MyBookingListComponent implements OnInit {
   loadBookings(): void {
     this.bookingService.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings = data;
-        console.log(data);
-        console.log(this.bookings);
-        console.log(this.bookings.length);
+        this.bookings = data.reverse();
         this.loading = false;
       },
       error: (error) => {
@@ -36,12 +33,17 @@ export class MyBookingListComponent implements OnInit {
   }
 
   cancelBooking(id: number): void {
-    if (confirm('Точно отменить бронирование?')) {
-      this.bookingService.cancelBooking(id).subscribe({
-        next: () => this.loadBookings(),
-        error: (err) => console.error('Ошибка при отмене бронирования:', err)
-      });
-    }
+    this.bookingService.cancelMyBooking(id).subscribe({
+      next: () => this.loadBookings(),
+      error: (err) => console.error('Ошибка при отмене бронирования:', err)
+    });
+  }
+
+  payBooking(id: number): void {
+    this.bookingService.payBooking(id).subscribe({
+      next: () => this.loadBookings(),
+      error: (err) => console.error('Ошибка при оплате бронирования:', err)
+    });
   }
 
   formatDate(dateString: string): string {

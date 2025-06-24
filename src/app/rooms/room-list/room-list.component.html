@@ -1,5 +1,42 @@
 <div class="room-list-container">
+  <h6>Фильтры</h6>
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="filter-form">
+    <div class="filter-input">
+      <label>Заезд</label>
+      <input type="date" class="date-input" formControlName="checkIn">
+    </div>
+
+    <div class="filter-input">
+      <label>Выезд</label>
+      <input type="date" class="date-input" formControlName="checkOut">
+    </div>
+
+    <div class="filter-input">
+      <label>Кол-во гостей</label>
+      <input type="number" class="date-input" formControlName="capacity">
+    </div>
+
+    <div class="filter-input">
+      <label>Макс. цена</label>
+      <input type="number" class="date-input" formControlName="maxPrice">
+    </div>
+
+    <div class="filter-input">
+      <button type="submit" class="filter-btn">Применить</button>
+    </div>
+
+    <div class="filter-input">
+      <button type="button" class="cancel-button" (click)="resetFilters()">Сбросить</button>
+    </div>
+  </form>
+
+  <h6>Номера</h6>
   <div class="room-list">
-    <app-room-card *ngFor="let room of rooms" [room]="room"></app-room-card>
+    <app-room-card
+      *ngFor="let room of rooms"
+      [room]="room"
+      [checkInDate]="filterForm.value.checkIn"
+      [checkOutDate]="filterForm.value.checkOut">
+    </app-room-card>
   </div>
 </div>

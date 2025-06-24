@@ -14,5 +14,6 @@ export interface BookingResponse {
   checkInDate: string;
   checkOutDate: string;
   additionalServices: AdditionalService[];
+  status: string;
   totalPrice: number;
 }

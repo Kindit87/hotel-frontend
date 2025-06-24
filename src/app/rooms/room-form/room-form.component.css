@@ -48,7 +48,7 @@ label {
 }
 
   .form-control:focus {
-    border-color: #4a90e2;
+    border-color: #eb523f;
     outline: none;
   }
 
@@ -131,7 +131,7 @@ label {
 .service-price {
   margin-left: auto;
   font-weight: 500;
-  color: #4a90e2;
+  color: #eb523f;
 }
 
 .service-description {
@@ -148,7 +148,7 @@ label {
 }
 
   .no-services a {
-    color: #4a90e2;
+    color: #eb523f;
     text-decoration: none;
   }
 
@@ -169,12 +169,12 @@ label {
 }
 
 .btn-primary {
-  background-color: #4a90e2;
+  background-color: #eb523f;
   color: white;
 }
 
   .btn-primary:hover {
-    background-color: #3a7bc8;
+    background-color:#eb523f;
   }
 
   .btn-primary:disabled {

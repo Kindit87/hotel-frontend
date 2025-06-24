@@ -2,10 +2,11 @@ import { AdditionalService } from "./service";
 
 export interface Room {
   id: number;
-  number: number; // был string — теперь число
+  number: number;
+  name: string;
   description: string;
   pricePerNight: number;
-  capacity: number | null;
+  capacity: number;
   imagePath: string;
   available: boolean;
   additionalServices: AdditionalService[];

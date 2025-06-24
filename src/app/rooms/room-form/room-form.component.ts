@@ -61,7 +61,7 @@ export class RoomFormComponent implements OnInit {
     this.roomService.getRoom(id).subscribe((room) => {
       this.roomForm.patchValue({
         number: room.number,
-        name: room.number,
+        name: room.name,
         description: room.description,
         price: room.pricePerNight,
         capacity: room.capacity,
@@ -81,6 +81,7 @@ export class RoomFormComponent implements OnInit {
     const roomData = new FormData;
 
     roomData.append("number", this.roomForm.value.number);
+    roomData.append("name", this.roomForm.value.name);
     roomData.append("description", this.roomForm.value.description);
     roomData.append("pricePerNight", this.roomForm.value.price);
     roomData.append("capacity", this.roomForm.value.capacity);

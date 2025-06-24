@@ -13,7 +13,7 @@ export class HeaderComponent {
   isUserMenuOpen = false;
   protected readonly environment = environment;
 
-  navItems = [{ label: 'Комнаты', route: '/rooms' }];
+  navItems = [{ label: 'Номера', route: '/rooms' }];
 
   constructor(private authService: AuthService) { }
 
@@ -21,7 +21,7 @@ export class HeaderComponent {
     this.authService.user$.subscribe(user => {
       this.user = user;
 
-      this.navItems = [{ label: 'Комнаты', route: '/rooms' }];
+      this.navItems = [{ label: 'Номера', route: '/rooms' }];
 
       if (this.user?.role == 'ADMIN') {
         this.navItems.push(
@@ -45,7 +45,7 @@ export class HeaderComponent {
       }
       else {
         this.navItems = [
-          { label: 'Комнаты', route: '/rooms' }
+          { label: 'Номера', route: '/rooms' }
         ];
       }
     });

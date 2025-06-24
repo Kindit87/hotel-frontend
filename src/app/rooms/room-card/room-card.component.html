@@ -22,7 +22,9 @@
         </span>
       </div>
     </div>
-    <a *ngIf="room.available" [routerLink]="'/room/book/' + room.id">
+    <a *ngIf="room.available"
+       [routerLink]="['/room/book', room.id]"
+       [queryParams]="{ checkIn: checkInDate, checkOut: checkOutDate }">
       <button class="room-card-button">Забронировать</button>
     </a>
     <button *ngIf="!room.available" class="room-card-button" disabled>Недоступен</button>

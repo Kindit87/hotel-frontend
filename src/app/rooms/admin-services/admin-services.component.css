@@ -68,7 +68,7 @@ h2 {
 .service-price {
   font-size: 18px;
   font-weight: 600;
-  color: #4a90e2;
+  color: #ED6A5A;
   margin-right: 5%;
 }
 
@@ -93,12 +93,12 @@ h2 {
 }
 
 .btn-primary {
-  background-color: #4a90e2;
+  background-color: #ED6A5A;
   color: white;
 }
 
   .btn-primary:hover {
-    background-color: #3a7bc8;
+    background-color: #eb523f;
   }
 
 .btn-secondary {

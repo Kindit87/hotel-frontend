@@ -15,7 +15,7 @@ export class UserProfileComponent {
   isEditMode = true;
   isUserEditMode = false;
   isAdmin = false;
-  userId?: number;
+  userId: number = 0;
   imagePreview: string | null = null;
   isImageUploaded = false;
   protected readonly environment = environment;
@@ -35,7 +35,7 @@ export class UserProfileComponent {
       if (params["id"]) {
         this.isEditMode = true;
         this.isUserEditMode = true;
-        this.userId = +params["id"];
+        this.userId = params["id"];
         this.loadUser(this.userId);
       } else {
         this.loadMe();
@@ -109,7 +109,13 @@ export class UserProfileComponent {
       userData.append("image", this.userForm.value.image, "");
     }
 
-    const request = this.userService.updateMe(userData)
+    let request;
+
+    if (this.isUserEditMode) {
+      request = this.userService.updateUser(this.userId, userData);
+    } else {
+      request = this.userService.updateMe(userData)
+    }
 
     request.subscribe(() => {
       this.authService.fetchUser();

@@ -33,7 +33,17 @@ export class BookingService {
     return this.http.get<BookingResponse[]>(`${this.apiUrl}/me/all`, { headers: this.getAuthHeaders() });
   }
 
+  payBooking(bookingId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/me/${bookingId}/pay`, {}, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
   cancelBooking(bookingId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${bookingId}`, { headers: this.getAuthHeaders() });
+    return this.http.post(`${this.apiUrl}/${bookingId}/cancel`, {}, { headers: this.getAuthHeaders() });
+  }
+
+  cancelMyBooking(bookingId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/me/${bookingId}/cancel`, {}, { headers: this.getAuthHeaders() });
   }
 }

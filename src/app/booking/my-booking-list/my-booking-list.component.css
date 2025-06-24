@@ -120,6 +120,32 @@
   text-align: center;
 }
 
+.info-status {
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.info-status-success {
+  border: 1px solid #155724;
+  background-color: #d4edda;
+}
+
+.info-status-bad {
+  border: 1px solid #721c24;
+  background-color: #f5c6cb;
+}
+
+.info-status-warning {
+  border: 1px solid #856404;
+  background-color: #fff3cd;
+}
+
+.info-status-neutral {
+  border: 1px solid grey;
+  background-color: #d1d5db;
+}
+
 .btn-outline {
   border: 1px solid #d1d5db;
   background-color: transparent;
@@ -136,13 +162,13 @@
   }
 
 .btn-primary {
-  background-color: #3b82f6;
+  background-color: #ED6A5A;
   color: white;
   border: none;
 }
 
   .btn-primary:hover {
-    background-color: #2563eb;
+    background-color: #eb523f;
   }
 
 /* Стили для состояния загрузки */

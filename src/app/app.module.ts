@@ -21,6 +21,17 @@ import { AdminSerivcesComponent } from './rooms/admin-services/admin-services.co
 import { MyBookingListComponent } from './booking/my-booking-list/my-booking-list.component';
 import { AdminBookingComponent } from './booking/admin-booking/admin-booking.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -38,7 +49,8 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     AdminSerivcesComponent,
     MyBookingListComponent,
     AdminBookingComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +60,20 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatChipsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatToolbarModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

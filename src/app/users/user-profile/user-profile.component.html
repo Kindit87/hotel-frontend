@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div *ngIf="isAdmin" class="form-group">
+      <div *ngIf="isUserEditMode" class="form-group">
         <label for="name">Роль</label>
         <select id="role" formControlName="role" class="form-select">
           <option value="USER">User</option>

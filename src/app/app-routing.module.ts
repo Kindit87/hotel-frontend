@@ -12,9 +12,10 @@ import { AdminSerivcesComponent } from './rooms/admin-services/admin-services.co
 import { MyBookingListComponent } from './booking/my-booking-list/my-booking-list.component';
 import { AdminBookingComponent } from './booking/admin-booking/admin-booking.component';
 import {UserProfileComponent} from './users/user-profile/user-profile.component';
+import {HomepageComponent} from './homepage/homepage.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/rooms', pathMatch: 'full' },
+  { path: '', component: HomepageComponent, pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: AuthComponent },
   { path: 'profile', component: UserProfileComponent },

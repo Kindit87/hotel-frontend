@@ -39,7 +39,7 @@ label {
 }
 
   .form-control:focus {
-    border-color: #4a90e2;
+    border-color: #ED6A5A;
     outline: none;
   }
 
@@ -66,12 +66,12 @@ label {
 }
 
 .btn-primary {
-  background-color: #4a90e2;
+  background-color: #ED6A5A;
   color: white;
 }
 
   .btn-primary:hover {
-    background-color: #3a7bc8;
+    background-color: #eb523f;
   }
 
   .btn-primary:disabled {

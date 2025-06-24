@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room';
 import { AuthService } from './auth.service';
@@ -24,8 +24,12 @@ export class RoomsService {
     return this.http.get<Room[]>(this.apiUrl + "/all", { headers: this.getAuthHeaders() });
   }
 
-  getAvailableRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiUrl + "/all/available");
+  getAvailableRooms(checkIn: string, checkOut: string): Observable<Room[]> {
+    const params = new HttpParams()
+      .set('checkIn', checkIn)
+      .set('checkOut', checkOut);
+
+    return this.http.get<Room[]>(`${this.apiUrl}/all/available`, { params });
   }
 
   getRoom(id: number): Observable<Room> {

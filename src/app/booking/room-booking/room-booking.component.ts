@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { RoomsService } from "../../services/rooms.service";
 import { Room } from "../../models/room";
-import { ActivatedRoute } from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { BookingService } from "../../services/booking.service";
 import { BookingRequest } from "../../models/booking";
 import {environment} from '../../../environments/environment';
@@ -20,9 +20,25 @@ export class RoomBookingComponent implements OnInit {
   selectedServices: number[] = [];
   protected readonly environment = environment;
 
-  constructor(private route: ActivatedRoute, private roomsService: RoomsService, private bookingService: BookingService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private roomsService: RoomsService,
+    private bookingService: BookingService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['checkIn']) {
+        this.checkInDate = params['checkIn'];
+      }
+      if (params['checkOut']) {
+        this.checkOutDate = params['checkOut'];
+      }
+
+      this.onDateChange(); // сразу проверь корректность
+    });
+
     this.loadRoomData();
   }
 
@@ -149,7 +165,7 @@ export class RoomBookingComponent implements OnInit {
     this.bookingService.createBooking(bookingRequest).subscribe({
       next: (response) => {
         console.log("Бронирование успешно:", response);
-        alert("Бронирование успешно!");
+        this.router.navigate(['/booking/list/my']);
       },
       error: (err) => {
         console.error("Ошибка бронирования:", err);

@@ -1,0 +1,281 @@
+<div class="hotel-homepage">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Добро пожаловать в<br>
+        <span class="accent-text">Grandhotel</span>
+      </h1>
+      <p class="hero-subtitle">Роскошь и комфорт в самом центре города</p>
+
+      <!-- Booking Form -->
+      <div class="booking-card">
+        <form [formGroup]="bookingForm" (ngSubmit)="onBookingSubmit()" class="booking-form">
+          <div class="form-group">
+            <label for="checkin">Заезд</label>
+            <input type="date" id="checkin" formControlName="checkin" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="checkout">Выезд</label>
+            <input type="date" id="checkout" formControlName="checkout" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="guests">Гости</label>
+            <select id="guests" formControlName="guests" class="form-control">
+              <option value="">Выберите количество</option>
+              <option value="1">1 гость</option>
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary search-button">
+            Найти номера
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Где мы находимся</h2>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- Rooms Section -->
+  <section id="rooms" class="rooms-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Наши номера</h2>
+        <p>Выберите идеальный номер для вашего комфортного пребывания</p>
+      </div>
+
+      <div class="rooms-grid">
+<!--        <div class="room-card" *ngFor="let room of rooms">-->
+<!--          <div class="room-image-container">-->
+<!--            <img [src]="environment.apiUrl + '/room/image/' + room.imagePath" [alt]="room.number" class="room-image">-->
+<!--&lt;!&ndash;            <span class="room-badge" [ngClass]="'badge-' + room.badgeColor">{{room.badge}}</span>&ndash;&gt;-->
+<!--          </div>-->
+
+<!--          <div class="room-content">-->
+<!--            <div class="room-header">-->
+<!--              <h3 class="room-name">{{room.number}}</h3>-->
+<!--              <span class="room-price">₽{{room.pricePerNight | number}}</span>-->
+<!--            </div>-->
+<!--            <p class="room-price-period">за ночь</p>-->
+
+<!--            <div class="room-details">-->
+<!--              <div class="room-detail">-->
+<!--                <span class="icon">👥</span>-->
+<!--                <span>{{room.capacity}} гостя</span>-->
+<!--              </div>-->
+<!--&lt;!&ndash;              <div class="room-detail">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="icon">🛏️</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span>{{room.beds}} кровать</span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="room-detail">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="icon">🛁</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span>{{room.bathrooms}} ванная</span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <button class="btn btn-primary full-width" (click)="bookRoom(room.id)">-->
+<!--              Забронировать-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+        <app-room-card *ngFor="let room of rooms" [room]="room"></app-room-card>
+      </div>
+
+      <a href="/rooms" class="btn btn-primary">Больше номеров</a>
+    </div>
+  </section>
+
+  <!-- Amenities Section -->
+  <section id="amenities" class="amenities-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Наши услуги</h2>
+        <p>Всё необходимое для вашего комфорта и удовольствия</p>
+      </div>
+
+      <div class="amenities-grid">
+        <div class="amenity-item" *ngFor="let amenity of amenities">
+          <div class="amenity-icon">{{amenity.icon}}</div>
+          <h3>{{amenity.title}}</h3>
+          <p>{{amenity.description}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section id="reviews" class="reviews-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Отзывы гостей</h2>
+        <div class="rating-summary">
+          <div class="stars">
+            <span *ngFor="let star of getStars(5)">{{star}}</span>
+          </div>
+          <span class="rating-number">4.9</span>
+          <span class="rating-count">(1,247 отзывов)</span>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card" *ngFor="let review of reviews">
+          <div class="review-header">
+            <div class="avatar">{{review.avatar}}</div>
+            <div class="review-info">
+              <h4>{{review.name}}</h4>
+              <div class="stars">
+                <span *ngFor="let star of getStars(review.rating)">{{star}}</span>
+              </div>
+            </div>
+          </div>
+          <p class="review-text">{{review.comment}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Свяжитесь с нами</h2>
+        <p>Мы всегда готовы ответить на ваши вопросы и помочь с бронированием</p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Контактная информация</h3>
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="icon">📍</span>
+              <span>ул. Тверская, 15, Москва, 125009</span>
+            </div>
+            <div class="contact-item">
+              <span class="icon">📞</span>
+              <span>+7 (495) 123-45-67</span>
+            </div>
+            <div class="contact-item">
+              <span class="icon">✉️</span>
+              <span>info&#64;grandhotel.ru</span>
+            </div>
+          </div>
+
+          <div class="social-media">
+            <h4>Следите за нами</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">📘</a>
+              <a href="#" class="social-link">📷</a>
+              <a href="#" class="social-link">🐦</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <div class="card">
+            <div class="card-header">
+              <h3>Отправить сообщение</h3>
+              <p>Заполните форму, и мы свяжемся с вами в ближайшее время</p>
+            </div>
+
+            <div class="card-content">
+              <form [formGroup]="contactForm" (ngSubmit)="onContactSubmit()" class="contact-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="firstName">Имя</label>
+                    <input type="text" id="firstName" formControlName="firstName" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <input type="text" id="lastName" formControlName="lastName" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" formControlName="email" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Телефон</label>
+                  <input type="tel" id="phone" formControlName="phone" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Сообщение</label>
+                  <textarea id="message" formControlName="message" class="form-control" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary full-width">
+                  Отправить сообщение
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <span class="logo-icon">🏨</span>
+            <span>Grand Hotel</span>
+          </div>
+          <p>Роскошный отель в самом сердце Москвы. Ваш комфорт - наш приоритет.</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Быстрые ссылки</h4>
+          <ul class="footer-links">
+            <li><a href="#" (click)="scrollToSection('rooms')">Номера</a></li>
+            <li><a href="#" (click)="scrollToSection('amenities')">Услуги</a></li>
+            <li><a href="#" (click)="scrollToSection('reviews')">Отзывы</a></li>
+            <li><a href="#" (click)="scrollToSection('contact')">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Услуги</h4>
+          <ul class="footer-links">
+            <li>Бронирование номеров</li>
+            <li>Трансфер из аэропорта</li>
+            <li>Организация мероприятий</li>
+            <li>Экскурсионные туры</li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Контакты</h4>
+          <ul class="footer-links">
+            <li>ул. Тверская, 15</li>
+            <li>Москва, 125009</li>
+            <li>+7 (495) 123-45-67</li>
+            <li>info&#64;grandhotel.ru</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Grand Hotel. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+</div>

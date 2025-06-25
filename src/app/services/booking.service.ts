@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BookingRequest, BookingResponse } from '../models/booking';
 import { AuthService } from './auth.service';
 import {environment} from '../../environments/environment';
+import {PaginatedResponse} from '../models/paginated-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +26,20 @@ export class BookingService {
     return this.http.post(`${this.apiUrl}/me`, request, { headers: this.getAuthHeaders() });
   }
 
-  getBookings(): Observable<BookingResponse[]> {
-    return this.http.get<BookingResponse[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
+  getBookings(page: number = 0, size: number = 10): Observable<PaginatedResponse<BookingResponse>> {
+    return this.http.get<PaginatedResponse<BookingResponse>>(
+      `${this.apiUrl}/all?page=${page}&size=${size}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-  getMyBookings(): Observable<BookingResponse[]> {
-    return this.http.get<BookingResponse[]>(`${this.apiUrl}/me/all`, { headers: this.getAuthHeaders() });
+  getMyBookings(page: number = 0, size: number = 10): Observable<PaginatedResponse<BookingResponse>> {
+    return this.http.get<PaginatedResponse<BookingResponse>>(
+      `${this.apiUrl}/me/all?page=${page}&size=${size}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
+
 
   updateBookingStatus(id: number, status: string): Observable<BookingResponse> {
     return this.http.patch<BookingResponse>(

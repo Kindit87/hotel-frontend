@@ -22,14 +22,15 @@ export class MyBookingListComponent implements OnInit {
   loadBookings(): void {
     this.bookingService.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings = data.reverse();
+        this.bookings = data.content.reverse();
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Ошибка при загрузке бронирований:', error);
+      error: (err) => {
+        console.error('Ошибка при загрузке моих бронирований:', err);
         this.loading = false;
       }
     });
+
   }
 
   cancelBooking(id: number): void {

@@ -30,7 +30,7 @@ export class AdminBookingComponent implements OnInit {
   loadBookings(): void {
     this.bookingService.getBookings().subscribe({
       next: (data) => {
-        this.bookings = data.reverse();
+        this.bookings = data.content.reverse();
         this.loading = false;
       },
       error: (error) => {

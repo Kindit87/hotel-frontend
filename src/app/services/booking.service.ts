@@ -34,13 +34,15 @@ export class BookingService {
     return this.http.get<PaginatedResponse<BookingResponse>>(url, { headers: this.getAuthHeaders() });
   }
 
-  getMyBookings(page: number = 0, size: number = 10): Observable<PaginatedResponse<BookingResponse>> {
-    return this.http.get<PaginatedResponse<BookingResponse>>(
-      `${this.apiUrl}/me/all?page=${page}&size=${size}`,
-      { headers: this.getAuthHeaders() }
-    );
-  }
+  getMyBookings(page = 0, size = 10, status?: string): Observable<PaginatedResponse<BookingResponse>> {
+    const params: any = { page, size };
+    if (status) params.status = status;
 
+    return this.http.get<PaginatedResponse<BookingResponse>>(`${this.apiUrl}/me/all`, {
+      headers: this.getAuthHeaders(),
+      params
+    });
+  }
 
   updateBookingStatus(id: number, status: string): Observable<BookingResponse> {
     return this.http.patch<BookingResponse>(

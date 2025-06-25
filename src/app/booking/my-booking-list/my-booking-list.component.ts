@@ -11,6 +11,10 @@ import {environment} from '../../../environments/environment';
 export class MyBookingListComponent implements OnInit {
   bookings: BookingResponse[] = [];
   loading = true;
+  currentPage = 0;
+  totalPages = 0;
+  pageSize = 10;
+  selectedStatus = '';
   protected readonly environment = environment;
 
   constructor(private bookingService: BookingService) { }
@@ -20,9 +24,11 @@ export class MyBookingListComponent implements OnInit {
   }
 
   loadBookings(): void {
-    this.bookingService.getMyBookings().subscribe({
+    this.loading = true;
+    this.bookingService.getMyBookings(this.currentPage, this.pageSize, this.selectedStatus).subscribe({
       next: (data) => {
-        this.bookings = data.content.reverse();
+        this.bookings = data.content;
+        this.totalPages = data.totalPages;
         this.loading = false;
       },
       error: (err) => {
@@ -30,7 +36,6 @@ export class MyBookingListComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
 
   cancelBooking(id: number): void {
@@ -54,5 +59,20 @@ export class MyBookingListComponent implements OnInit {
       month: 'long',
       year: 'numeric'
     });
+  }
+
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadBookings();
+    }
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage - 1);
   }
 }

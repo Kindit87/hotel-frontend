@@ -1,49 +1,82 @@
-<div class="admin-container">
-  <h1 class="admin-title">Управление бронированиями</h1>
+<div class="room-list-container">
+  <h6>Бронирования</h6>
 
-  <div class="search-container">
-    <input type="text"
-           [(ngModel)]="searchTerm"
-           placeholder="Поиск по номеру..."
-           class="search-input" />
-    <button (click)="loadBookings()" class="refresh-button" [disabled]="loading">
-      {{ loading ? "Загрузка..." : "Обновить" }}
-    </button>
+  <div *ngIf="loading" class="loading-container">
+    <div *ngFor="let i of [1, 2, 3]" class="room-card skeleton">
+      <div class="room-image skeleton-image"></div>
+      <div class="room-details">
+        <div class="skeleton-text skeleton-title"></div>
+        <div class="skeleton-text skeleton-subtitle"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-button"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="users-table-container">
-    <table class="users-table">
-      <thead>
-        <tr>
-          <th>Номер</th>
-          <th>Дата заезда</th>
-          <th>Дата выезда</th>
-          <th>Доп. услуги</th>
-          <th>Действия</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let booking of filteredBookings">
-          <td>{{ booking.room.number }}</td>
-          <td>{{ formatDate(booking.checkInDate) }}</td>
-          <td>{{ formatDate(booking.checkOutDate) }}</td>
-          <td>
-            <ul>
-              <li *ngFor="let service of booking.additionalServices">
-                {{ service.name }}
-              </li>
-            </ul>
-          </td>
-          <td class="actions-cell">
-            <button (click)="cancelBooking(booking.id)" class="delete-button">
-              Отменить
-            </button>
-          </td>
-        </tr>
-        <tr *ngIf="filteredBookings.length === 0 && !loading">
-          <td colspan="5" class="no-users">Нет бронирований</td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+    <h2>Пока нет забронированных номеров</h2>
   </div>
+
+  <div *ngIf="!loading && bookings.length > 0" class="rooms-grid">
+    <div *ngFor="let booking of bookings" class="room-card">
+      <div class="room-details">
+        <h3>Бронирование №{{ booking.id }}</h3>
+
+        <div class="info-item">
+          <strong>Пользователь:</strong>
+          <span>{{ booking.user.firstname + " " + booking.user.lastname }} ({{ booking.user.email }})</span>
+        </div>
+
+        <div class="info-item">
+          <strong>Номер:</strong>
+          <span>{{ booking.room.name }} №{{ booking.room.number }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>Даты:</strong>
+          <span>{{ formatDate(booking.checkInDate) }} – {{ formatDate(booking.checkOutDate) }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>Цена:</strong>
+          <span>{{ booking.totalPrice | number }} ₽</span>
+        </div>
+
+        <div *ngIf="booking.additionalServices.length > 0" class="additional-services">
+          <strong>Доп. услуги:</strong>
+          <ul>
+            <li *ngFor="let service of booking.additionalServices">
+              {{ service.name }} — {{ service.price | number }} ₽
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-item">
+          <strong>Статус:</strong>
+          <span [ngClass]="{
+          'info-status': true,
+          'info-status-success': booking.status === 'CONFIRMED' || booking.status === 'CHECKED_IN',
+          'info-status-warning': booking.status === 'PENDING',
+          'info-status-bad': booking.status === 'CANCELLED' || booking.status === 'NO_SHOW',
+          'info-status-neutral': booking.status === 'CHECKED_OUT'
+        }">{{ statusToText(booking.status) }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>Изменить статус:</strong>
+          <select [ngModel]="booking.status" (ngModelChange)="changeStatus(booking.id, $event)">
+            <option *ngFor="let s of statusList" [value]="s">{{ statusToText(s) }}</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-outline" (click)="cancelBooking(booking.id)" [disabled]="booking.status === 'CANCELLED' || booking.status === 'NO_SHOW'">
+            Отменить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

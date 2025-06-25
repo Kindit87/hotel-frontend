@@ -33,6 +33,14 @@ export class BookingService {
     return this.http.get<BookingResponse[]>(`${this.apiUrl}/me/all`, { headers: this.getAuthHeaders() });
   }
 
+  updateBookingStatus(id: number, status: string): Observable<BookingResponse> {
+    return this.http.patch<BookingResponse>(
+      `${this.apiUrl}/${id}`,
+      { status },
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
   payBooking(bookingId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/me/${bookingId}/pay`, {}, {
       headers: this.getAuthHeaders()

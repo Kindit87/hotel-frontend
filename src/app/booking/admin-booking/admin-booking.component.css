@@ -1,238 +1,240 @@
-.admin-container {
+.room-list-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-}
-
-.admin-title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+  padding: 20px 16px;
   font-family: 'Roboto', Arial, sans-serif;
 }
 
-.search-container {
+.room-list-container h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* Использование Flexbox для сетки */
+.rooms-grid {
   display: flex;
-  margin-bottom: 20px;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 
-.search-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: 'Roboto', Arial, sans-serif;
-}
-
-.refresh-button {
-  padding: 10px 15px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-  .refresh-button:hover {
-    background-color: #e0e0e0;
-  }
-
-  .refresh-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-.users-table-container {
-  overflow-x: auto;
-}
-
-.users-table {
-  width: 100%;
-  border-collapse: collapse;
+.room-card {
+  flex: 1 1 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', Arial, sans-serif;
+  min-width: 280px;
 }
 
-  .users-table th,
-  .users-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .users-table th {
-    background-color: #f8f8f8;
-    font-weight: 600;
-  }
-
-  .users-table tr:hover {
-    background-color: #f5f5f5;
-  }
-
-.actions-cell {
-  white-space: nowrap;
+.room-image {
+  position: relative;
+  height: 192px;
 }
 
-.edit-button,
-.delete-button {
-  padding: 6px 12px;
-  margin-right: 5px;
-  border: none;
-  border-radius: 4px;
+.room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-confirmed {
+  background-color: #10b981;
+  color: white;
+}
+
+.status-pending {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.status-completed {
+  background-color: #6b7280;
+  color: white;
+}
+
+.room-details {
+  padding: 16px;
+}
+
+.room-details h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.hotel-name {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.booking-info {
+  margin-top: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.calendar-icon, .guests-icon {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.price {
+  margin-top: 16px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.btn {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 13px;
-}
-
-.edit-button {
-  background-color: #4a90e2;
-  color: white;
-}
-
-  .edit-button:hover {
-    background-color: #3a80d2;
-  }
-
-.delete-button {
-  background-color: #e25c5c;
-  color: white;
-}
-
-  .delete-button:hover {
-    background-color: #d24c4c;
-  }
-
-.no-users {
   text-align: center;
-  padding: 20px;
-  color: #888;
 }
 
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.info-status {
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  font-family: 'Roboto', Arial, sans-serif;
+  border-radius: 4px;
 }
 
-.modal-container {
-  background-color: white;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.info-status-success {
+  border: 1px solid #155724;
+  background-color: #d4edda;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
+.info-status-bad {
+  border: 1px solid #721c24;
+  background-color: #f5c6cb;
 }
 
-  .modal-header h2 {
-    margin: 0;
-    font-size: 18px;
-  }
+.info-status-warning {
+  border: 1px solid #856404;
+  background-color: #fff3cd;
+}
 
-.close-button {
-  background: none;
+.info-status-neutral {
+  border: 1px solid grey;
+  background-color: #d1d5db;
+}
+
+.btn-outline {
+  border: 1px solid #d1d5db;
+  background-color: transparent;
+}
+
+.btn-danger {
+  background-color: #e53935;
+  color: #f5f5f5;
   border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #888;
 }
 
-  .close-button:hover {
-    color: #333;
-  }
-
-.edit-form {
-  padding: 20px;
+.btn-outline:hover {
+  background-color: #f9fafb;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-
-.form-input {
-  width: 95%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.form-select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-  .form-input:focus,
-  .form-select:focus {
-    border-color: #4a90e2;
-    outline: none;
-  }
-
-.error-message {
-  color: #e25c5c;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.cancel-button,
-.save-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.cancel-button {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-  .cancel-button:hover {
-    background-color: #e0e0e0;
-  }
-
-.save-button {
-  background-color: #4a90e2;
+.btn-primary {
+  background-color: #ED6A5A;
   color: white;
+  border: none;
 }
 
-  .save-button:hover {
-    background-color: #3a80d2;
+.btn-primary:hover {
+  background-color: #eb523f;
+}
+
+/* Стили для состояния загрузки */
+.loading-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.skeleton {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.skeleton-image {
+  height: 192px;
+  background-color: #e2e8f0;
+  border-radius: 8px 8px 0 0;
+}
+
+.skeleton-text {
+  height: 16px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  width: 75%;
+  height: 20px;
+}
+
+.skeleton-subtitle {
+  width: 50%;
+}
+
+.skeleton-button {
+  height: 40px;
+  background-color: #e2e8f0;
+  border-radius: 6px;
+  margin-top: 16px;
+}
+
+/* Стили для пустого состояния */
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+}
+
+.empty-state h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 640px) {
+  .rooms-grid, .loading-container {
+    flex-direction: column;
   }
 
-  .save-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  .room-card, .skeleton {
+    flex: 1 1 100%;
   }
+}

@@ -1,5 +1,6 @@
 import { Room } from "./room";
 import { AdditionalService } from "./service";
+import {User} from '../services/auth.service';
 
 export interface BookingRequest {
   roomId: number;
@@ -11,6 +12,7 @@ export interface BookingRequest {
 export interface BookingResponse {
   id: number;
   room: Room;
+  user: User;
   checkInDate: string;
   checkOutDate: string;
   additionalServices: AdditionalService[];

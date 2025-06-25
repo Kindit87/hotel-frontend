@@ -26,11 +26,12 @@ export class BookingService {
     return this.http.post(`${this.apiUrl}/me`, request, { headers: this.getAuthHeaders() });
   }
 
-  getBookings(page: number = 0, size: number = 10): Observable<PaginatedResponse<BookingResponse>> {
-    return this.http.get<PaginatedResponse<BookingResponse>>(
-      `${this.apiUrl}/all?page=${page}&size=${size}`,
-      { headers: this.getAuthHeaders() }
-    );
+  getBookings(page: number = 0, size: number = 10, status?: string): Observable<PaginatedResponse<BookingResponse>> {
+    let url = `${this.apiUrl}/all?page=${page}&size=${size}`;
+    if (status) {
+      url += `&status=${status}`;
+    }
+    return this.http.get<PaginatedResponse<BookingResponse>>(url, { headers: this.getAuthHeaders() });
   }
 
   getMyBookings(page: number = 0, size: number = 10): Observable<PaginatedResponse<BookingResponse>> {

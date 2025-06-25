@@ -11,6 +11,11 @@ import { environment } from '../../../environments/environment';
 export class AdminBookingComponent implements OnInit {
   bookings: BookingResponse[] = [];
   loading = true;
+  currentPage = 0;
+  totalPages = 0;
+  pageSize = 10;
+  selectedStatus = '';
+
   protected readonly environment = environment;
   statusList = [
     'PENDING',
@@ -28,9 +33,12 @@ export class AdminBookingComponent implements OnInit {
   }
 
   loadBookings(): void {
-    this.bookingService.getBookings().subscribe({
+    this.loading = true;
+    this.bookingService.getBookings(this.currentPage, this.pageSize, this.selectedStatus).subscribe({
       next: (data) => {
-        this.bookings = data.content.reverse();
+        this.bookings = data.content;
+        this.totalPages = data.totalPages;
+        this.currentPage = data.number;
         this.loading = false;
       },
       error: (error) => {
@@ -44,13 +52,6 @@ export class AdminBookingComponent implements OnInit {
     this.bookingService.cancelMyBooking(id).subscribe({
       next: () => this.loadBookings(),
       error: (err) => console.error('Ошибка при отмене бронирования:', err)
-    });
-  }
-
-  payBooking(id: number): void {
-    this.bookingService.payBooking(id).subscribe({
-      next: () => this.loadBookings(),
-      error: (err) => console.error('Ошибка при оплате бронирования:', err)
     });
   }
 
@@ -84,4 +85,20 @@ export class AdminBookingComponent implements OnInit {
       error: err => alert('Не удалось обновить статус')
     });
   }
+
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadBookings();
+    }
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage - 1);
+  }
+
 }

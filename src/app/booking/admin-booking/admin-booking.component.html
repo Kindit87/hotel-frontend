@@ -1,4 +1,12 @@
 <div class="room-list-container">
+  <div class="filter-bar">
+    <label for="status">Фильтр по статусу:</label>
+    <select id="status" [(ngModel)]="selectedStatus" (change)="loadBookings()">
+      <option value="">Все</option>
+      <option *ngFor="let s of statusList" [value]="s">{{ statusToText(s) }}</option>
+    </select>
+  </div>
+
   <h6>Бронирования</h6>
 
   <div *ngIf="loading" class="loading-container">
@@ -24,27 +32,32 @@
         <h3>Бронирование №{{ booking.id }}</h3>
 
         <div class="info-item">
-          <strong>Пользователь:</strong>
+          <strong>Пользователь:&nbsp;</strong>
           <span>{{ booking.user.firstname + " " + booking.user.lastname }} ({{ booking.user.email }})</span>
         </div>
 
         <div class="info-item">
-          <strong>Номер:</strong>
-          <span>{{ booking.room.name }} №{{ booking.room.number }}</span>
+          <strong>Номер:&nbsp;</strong>
+          <span>№{{ booking.room.number }}</span>
         </div>
 
         <div class="info-item">
-          <strong>Даты:</strong>
+          <strong>Название:&nbsp;</strong>
+          <span>{{ booking.room.name }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>Даты:&nbsp;</strong>
           <span>{{ formatDate(booking.checkInDate) }} – {{ formatDate(booking.checkOutDate) }}</span>
         </div>
 
         <div class="info-item">
-          <strong>Цена:</strong>
+          <strong>Цена:&nbsp;</strong>
           <span>{{ booking.totalPrice | number }} ₽</span>
         </div>
 
         <div *ngIf="booking.additionalServices.length > 0" class="additional-services">
-          <strong>Доп. услуги:</strong>
+          <strong>Доп. услуги:&nbsp;</strong>
           <ul>
             <li *ngFor="let service of booking.additionalServices">
               {{ service.name }} — {{ service.price | number }} ₽
@@ -53,7 +66,7 @@
         </div>
 
         <div class="info-item">
-          <strong>Статус:</strong>
+          <strong>Статус:&nbsp;</strong>
           <span [ngClass]="{
           'info-status': true,
           'info-status-success': booking.status === 'CONFIRMED' || booking.status === 'CHECKED_IN',
@@ -76,6 +89,14 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="pagination-container">
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 0">←</button>
+      <span>&nbsp;{{ currentPage + 1 }} из {{ totalPages }}&nbsp;</span>
+      <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">→</button>
     </div>
   </div>
 

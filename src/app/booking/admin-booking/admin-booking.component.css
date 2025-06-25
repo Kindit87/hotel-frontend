@@ -1,3 +1,9 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
 .room-list-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,7 +17,6 @@
   margin-bottom: 24px;
 }
 
-/* Использование Flexbox для сетки */
 .rooms-grid {
   display: flex;
   flex-wrap: wrap;
@@ -212,7 +217,6 @@
   margin-top: 16px;
 }
 
-/* Стили для пустого состояния */
 .empty-state {
   text-align: center;
   padding: 48px 16px;

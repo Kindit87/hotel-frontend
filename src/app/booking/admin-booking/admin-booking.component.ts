@@ -11,12 +11,20 @@ import { environment } from '../../../environments/environment';
 export class AdminBookingComponent implements OnInit {
   bookings: BookingResponse[] = [];
   loading = true;
+
   currentPage = 0;
   totalPages = 0;
   pageSize = 10;
+
   selectedStatus = '';
+  filterEmail = '';
+  filterFirstname = '';
+  filterLastname = '';
+  checkInFrom: string | null = null;
+  checkInTo: string | null = null;
 
   protected readonly environment = environment;
+
   statusList = [
     'PENDING',
     'CONFIRMED',
@@ -34,7 +42,20 @@ export class AdminBookingComponent implements OnInit {
 
   loadBookings(): void {
     this.loading = true;
-    this.bookingService.getBookings(this.currentPage, this.pageSize, this.selectedStatus).subscribe({
+
+    const params: any = {
+      page: this.currentPage,
+      size: this.pageSize
+    };
+
+    if (this.selectedStatus) params.status = this.selectedStatus;
+    if (this.filterEmail) params.email = this.filterEmail;
+    if (this.filterFirstname) params.firstname = this.filterFirstname;
+    if (this.filterLastname) params.lastname = this.filterLastname;
+    if (this.checkInFrom) params.checkInFrom = this.checkInFrom;
+    if (this.checkInTo) params.checkInTo = this.checkInTo;
+
+    this.bookingService.getBookings(params).subscribe({
       next: (data) => {
         this.bookings = data.content;
         this.totalPages = data.totalPages;
@@ -101,4 +122,13 @@ export class AdminBookingComponent implements OnInit {
     this.goToPage(this.currentPage - 1);
   }
 
+  resetFilters(): void {
+    this.selectedStatus = '';
+    this.filterEmail = '';
+    this.filterFirstname = '';
+    this.filterLastname = '';
+    this.checkInFrom = null;
+    this.checkInTo = null;
+    this.loadBookings();
+  }
 }

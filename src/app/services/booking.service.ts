@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookingRequest, BookingResponse } from '../models/booking';
@@ -26,23 +26,40 @@ export class BookingService {
     return this.http.post(`${this.apiUrl}/me`, request, { headers: this.getAuthHeaders() });
   }
 
-  getBookings(page: number = 0, size: number = 10, status?: string): Observable<PaginatedResponse<BookingResponse>> {
-    let url = `${this.apiUrl}/all?page=${page}&size=${size}`;
-    if (status) {
-      url += `&status=${status}`;
-    }
-    return this.http.get<PaginatedResponse<BookingResponse>>(url, { headers: this.getAuthHeaders() });
+  getBookings(filters: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        httpParams = httpParams.set(key, String(value));  // 👈 Приводим к строке
+      }
+    });
+
+    return this.http.get(`${this.apiUrl}/all`, {
+      headers: this.getAuthHeaders(),
+      params: httpParams
+    });
   }
 
-  getMyBookings(page = 0, size = 10, status?: string): Observable<PaginatedResponse<BookingResponse>> {
-    const params: any = { page, size };
+  getMyBookings(
+    page: number,
+    size: number,
+    status?: string,
+    checkInFrom?: string,
+    checkInTo?: string
+  ): Observable<PaginatedResponse<BookingResponse>> {
+    let params: any = { page, size };
+
     if (status) params.status = status;
+    if (checkInFrom) params.checkInFrom = checkInFrom;
+    if (checkInTo) params.checkInTo = checkInTo;
 
     return this.http.get<PaginatedResponse<BookingResponse>>(`${this.apiUrl}/me/all`, {
       headers: this.getAuthHeaders(),
-      params
+      params,
     });
   }
+
 
   updateBookingStatus(id: number, status: string): Observable<BookingResponse> {
     return this.http.patch<BookingResponse>(

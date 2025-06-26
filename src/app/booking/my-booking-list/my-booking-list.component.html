@@ -1,4 +1,33 @@
 <div class="room-list-container">
+  <h6>Фильтры</h6>
+  <form class="filter-form" (ngSubmit)="loadBookings()" #filterForm="ngForm">
+    <div class="filter-input">
+      <label for="status">Статус:</label>
+      <select id="status" class="date-input" [(ngModel)]="selectedStatus" name="status">
+        <option value="">Все</option>
+        <option *ngFor="let s of statusList" [value]="s">{{ statusToText(s) }}</option>
+      </select>
+    </div>
+
+    <div class="filter-input">
+      <label for="checkInFrom">Дата заезда с:</label>
+      <input id="checkInFrom" class="date-input" type="date" [(ngModel)]="checkInFrom" name="checkInFrom">
+    </div>
+
+    <div class="filter-input">
+      <label for="checkInTo">Дата заезда до:</label>
+      <input id="checkInTo" class="date-input" type="date" [(ngModel)]="checkInTo" name="checkInTo">
+    </div>
+
+    <div class="filter-input">
+      <button class="filter-btn" type="submit">Применить</button>
+    </div>
+
+    <div class="filter-input">
+      <button class="cancel-button" type="button" (click)="resetFilters()">Сбросить</button>
+    </div>
+  </form>
+
   <h6>Мои забронированные номера</h6>
 
   <div *ngIf="loading" class="loading-container">

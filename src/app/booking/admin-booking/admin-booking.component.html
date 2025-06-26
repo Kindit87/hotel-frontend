@@ -1,11 +1,51 @@
 <div class="room-list-container">
-  <div class="filter-bar">
-    <label for="status">Фильтр по статусу:</label>
-    <select id="status" [(ngModel)]="selectedStatus" (change)="loadBookings()">
-      <option value="">Все</option>
-      <option *ngFor="let s of statusList" [value]="s">{{ statusToText(s) }}</option>
-    </select>
-  </div>
+  <h6>Фильтры</h6>
+  <form class="filter-form" (ngSubmit)="loadBookings()" #filterForm="ngForm">
+    <div class="filter-form">
+      <div class="filter-input">
+        <label for="status">Статус:</label>
+        <select id="status" class="date-input" [(ngModel)]="selectedStatus" name="status" (change)="loadBookings()">
+          <option value="">Все</option>
+          <option *ngFor="let s of statusList" [value]="s">{{ statusToText(s) }}</option>
+        </select>
+      </div>
+
+      <div class="filter-input">
+        <label for="email">Email:</label>
+        <input id="email" class="date-input" type="text" [(ngModel)]="filterEmail" name="email" placeholder="example@mail.com">
+      </div>
+
+      <div class="filter-input">
+        <label for="firstname">Имя:</label>
+        <input id="firstname" class="date-input" type="text" [(ngModel)]="filterFirstname" name="firstname" placeholder="Имя">
+      </div>
+
+      <div class="filter-input">
+        <label for="lastname">Фамилия:</label>
+        <input id="lastname" class="date-input" type="text" [(ngModel)]="filterLastname" name="lastname" placeholder="Фамилия">
+      </div>
+
+      <div class="filter-input">
+        <label for="checkInFrom">Дата заезда с:</label>
+        <input id="checkInFrom" class="date-input" type="date" [(ngModel)]="checkInFrom" name="checkInFrom">
+      </div>
+
+      <div class="filter-input">
+        <label for="checkInTo">Дата заезда до:</label>
+        <input id="checkInTo" class="date-input" type="date" [(ngModel)]="checkInTo" name="checkInTo">
+      </div>
+    </div>
+
+   <div class="filter-form">
+     <div class="filter-input">
+       <button class="filter-btn" type="submit">Применить</button>
+     </div>
+
+     <div class="filter-input">
+       <button class="cancel-button" type="button" (click)="resetFilters()">Сбросить</button>
+     </div>
+   </div>
+  </form>
 
   <h6>Бронирования</h6>
 

@@ -15,6 +15,16 @@ export class MyBookingListComponent implements OnInit {
   totalPages = 0;
   pageSize = 10;
   selectedStatus = '';
+  checkInFrom: string = '';
+  checkInTo: string = '';
+  statusList = [
+    'PENDING',
+    'CONFIRMED',
+    'CHECKED_IN',
+    'CHECKED_OUT',
+    'CANCELLED',
+    'NO_SHOW'
+  ];
   protected readonly environment = environment;
 
   constructor(private bookingService: BookingService) { }
@@ -25,17 +35,21 @@ export class MyBookingListComponent implements OnInit {
 
   loadBookings(): void {
     this.loading = true;
-    this.bookingService.getMyBookings(this.currentPage, this.pageSize, this.selectedStatus).subscribe({
-      next: (data) => {
-        this.bookings = data.content;
-        this.totalPages = data.totalPages;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Ошибка при загрузке моих бронирований:', err);
-        this.loading = false;
-      }
-    });
+
+    this.bookingService
+      .getMyBookings(this.currentPage, this.pageSize, this.selectedStatus, this.checkInFrom, this.checkInTo)
+      .subscribe({
+        next: (data) => {
+          this.bookings = data.content;
+          this.totalPages = data.totalPages;
+          this.currentPage = data.number;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Ошибка при загрузке моих бронирований:', err);
+          this.loading = false;
+        }
+      });
   }
 
   cancelBooking(id: number): void {
@@ -59,6 +73,25 @@ export class MyBookingListComponent implements OnInit {
       month: 'long',
       year: 'numeric'
     });
+  }
+
+  resetFilters(): void {
+    this.selectedStatus = '';
+    this.checkInFrom = '';
+    this.checkInTo = '';
+    this.loadBookings();
+  }
+
+  statusToText(status: string): string {
+    switch (status) {
+      case 'PENDING': return 'Ожидает оплаты';
+      case 'CONFIRMED': return 'Оплачено';
+      case 'CHECKED_IN': return 'Заселен';
+      case 'CHECKED_OUT': return 'Выселен';
+      case 'CANCELLED': return 'Отменено';
+      case 'NO_SHOW': return 'Не приехал';
+      default: return status;
+    }
   }
 
   goToPage(page: number): void {

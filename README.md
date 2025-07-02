@@ -1,59 +1,59 @@
-# HotelFrontend
+# Веб-приложение для автоматизации управления отеля и бронирования номеров 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+> Полнофункциональная система для онлайн-бронирования и администрирования номеров в отеле с разделением прав доступа и гибкой логикой статусов.
 
-## Development server
+### 📝 Описание проекта
 
-To start a local development server, run:
+Проект создан для автоматизации процессов бронирования и управления номерами в небольших и средних отелях.
+Позволяет пользователям удобно бронировать номера с дополнительными услугами, а администраторам — управлять всеми аспектами через интерфейс.
+Это мой дипломный проект, выполненный в рамках изучения современных подходов к веб-разработке.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠️ Стек технологий
 
-## Code scaffolding
+* **Backend:** [Java, Spring Boot, Spring Security, Spring Data JPA, JWT]
+* **Frontend:** [Angular 18]
+* **База данных:** [PostgreSQL]
+* **Деплой:** [Docker, Nginx]
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+### ✨ Основные возможности (Features)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+* Регистрация и аутентификация с JWT, разграничение ролей (USER, MODERATOR, ADMIN)
+* Пользовательский кабинет с историей и управлением бронированиями
+* Админ-панель с CRUD-интерфейсом для номеров, пользователей, бронирований и услуг
+* Онлайн-бронирование с выбором дополнительных услуг
+* Фильтрация и пагинация бронирований (по статусу, дате, email и т.д.)
+* Обработка статусов бронирования: PENDING, CONFIRMED, CANCELLED, CHECKED_IN, NO_SHOW
+* Отмена/оплата бронирования через UI
+* Docker-сборка
+* 
+---
 
-```bash
-ng generate --help
-```
+### 🚀 Как запустить проект локально
 
-## Building
+1.  Клонируйте репозиторий:
+    ```bash
+    git clone https://github.com/Kindit87/hotel-frontend
+    ```
+2.  Перейдите в директорию проекта:
+    ```bash
+    cd hotel-frontend
+    ```
+3.  Запустите веб-сервер:
+    ```bash
+    docker-compose up
+    ```
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+### 🎓 Что я изучил в процессе
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Построил полную архитектуру backend-приложения с нуля на Spring Boot
+* Освоил работу с JWT и Spring Security, включая настройку ролей и фильтров
+* Реализовал полноценную работу с PostgreSQL через Spring Data JPA
+* Научился оборачивать приложение в Docker и настраивать nginx-проксирование
+* Впервые реализовал фильтрацию и пагинацию на уровне API и frontend
+* Отладил взаимодействие между Angular и Spring через REST, обрабатывая CORS, токены и ошибки
